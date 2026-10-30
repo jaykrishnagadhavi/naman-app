@@ -64,3 +64,4 @@ Following `docs/design-research/`, the UI combines the strengths of Peterson Aca
 - **Bandwidth Consumption:** 100 students completing a 12-hour 720p course consume ~1.3 TB monthly transfer.
 - **Target Infrastructure:** Ubuntu 24.04 VPS with 4 vCPUs, 8 GB RAM, 200 GB+ NVMe SSD, and 4 TB+ monthly transfer (India/Singapore datacenter).
 - **Security Boundaries:** Encrypted AES-128 HLS with tokenized key distribution, 1 active stream limit per account, segment download rate limiting (3-4x real time), and dynamic forensic watermarking with watermark session tracing.
+

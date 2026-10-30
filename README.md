@@ -106,3 +106,4 @@ VITE_RAZORPAY_KEY_ID=rzp_test_placeholder
 VITE_VIDEO_DOMAIN=video.abrainoconcious.com
 ```
 A typed Zod loader (`packages/shared/src/env.ts`) validates environment variables upon startup with clear errors if required keys are missing.
+
