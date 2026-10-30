@@ -1,0 +1,693 @@
+{
+  "title": "Peterson Academy | How to Think, Not What to Think.",
+  "fonts": [
+    "Inter, \"SF Pro\", system-ui, sans-serif",
+    "futura-100-book, futura-pt, system-ui, sans-serif",
+    "futura-100, futura-100-book, futura-pt, system-ui, sans-serif",
+    "\"Silvana Text\", \"EB Garamond\", serif",
+    "-apple-system, BlinkMacSystemFont, \"SF Pro Text\", \"Segoe UI\", sans-serif"
+  ],
+  "colors": [
+    "rgb(0, 0, 0)",
+    "rgb(28, 28, 28)",
+    "rgb(255, 255, 255)",
+    "rgb(27, 27, 27)",
+    "rgb(127, 127, 127)",
+    "rgb(20, 20, 20)",
+    "rgb(115, 135, 149)",
+    "rgb(211, 211, 211)",
+    "rgb(127, 133, 137)",
+    "rgb(196, 199, 201)",
+    "rgb(228, 228, 226)",
+    "rgb(170, 170, 170)",
+    "rgba(0, 0, 0, 0)"
+  ],
+  "bgColors": [
+    "rgb(20, 20, 20)",
+    "rgb(255, 255, 255)",
+    "rgba(20, 20, 20, 0.76)",
+    "rgb(25, 26, 27)",
+    "rgb(17, 17, 17)",
+    "rgba(23, 23, 23, 0.88)"
+  ],
+  "headings": [
+    {
+      "tag": "H1",
+      "text": "Learn how to think.\nNot what to think.",
+      "font": "\"Silvana Text\", \"EB Garamond\", serif",
+      "size": "77.112px",
+      "weight": "300",
+      "color": "rgb(255, 255, 255)"
+    },
+    {
+      "tag": "H2",
+      "text": "Filmed like a movie.\nTaught like a seminar.",
+      "font": "\"Silvana Text\", \"EB Garamond\", serif",
+      "size": "66.96px",
+      "weight": "300",
+      "color": "rgb(255, 255, 255)"
+    },
+    {
+      "tag": "H3",
+      "text": "Trending",
+      "font": "futura-100, futura-100-book, futura-pt, system-ui, sans-serif",
+      "size": "70.9776px",
+      "weight": "500",
+      "color": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "tag": "H2",
+      "text": "The world’s finest professors.",
+      "font": "\"Silvana Text\", \"EB Garamond\", serif",
+      "size": "66.96px",
+      "weight": "300",
+      "color": "rgb(255, 255, 255)"
+    },
+    {
+      "tag": "H3",
+      "text": "Dr. David Eagleman",
+      "font": "futura-100, futura-100-book, futura-pt, system-ui, sans-serif",
+      "size": "36.72px",
+      "weight": "500",
+      "color": "rgb(255, 255, 255)"
+    },
+    {
+      "tag": "H3",
+      "text": "Dr. Jordan B. Peterson",
+      "font": "futura-100, futura-100-book, futura-pt, system-ui, sans-serif",
+      "size": "36.72px",
+      "weight": "500",
+      "color": "rgb(255, 255, 255)"
+    },
+    {
+      "tag": "H3",
+      "text": "Dr. John Vervaeke",
+      "font": "futura-100, futura-100-book, futura-pt, system-ui, sans-serif",
+      "size": "36.72px",
+      "weight": "500",
+      "color": "rgb(255, 255, 255)"
+    },
+    {
+      "tag": "H3",
+      "text": "Bishop Robert Barron",
+      "font": "futura-100, futura-100-book, futura-pt, system-ui, sans-serif",
+      "size": "36.72px",
+      "weight": "500",
+      "color": "rgb(255, 255, 255)"
+    },
+    {
+      "tag": "H3",
+      "text": "Wesley Huff",
+      "font": "futura-100, futura-100-book, futura-pt, system-ui, sans-serif",
+      "size": "36.72px",
+      "weight": "500",
+      "color": "rgb(255, 255, 255)"
+    },
+    {
+      "tag": "H3",
+      "text": "Dr. Baland Jalal",
+      "font": "futura-100, futura-100-book, futura-pt, system-ui, sans-serif",
+      "size": "36.72px",
+      "weight": "500",
+      "color": "rgb(255, 255, 255)"
+    },
+    {
+      "tag": "H3",
+      "text": "Dr. Arthur Brooks",
+      "font": "futura-100, futura-100-book, futura-pt, system-ui, sans-serif",
+      "size": "36.72px",
+      "weight": "500",
+      "color": "rgb(255, 255, 255)"
+    },
+    {
+      "tag": "H3",
+      "text": "Lord Andrew Roberts",
+      "font": "futura-100, futura-100-book, futura-pt, system-ui, sans-serif",
+      "size": "36.72px",
+      "weight": "500",
+      "color": "rgb(255, 255, 255)"
+    },
+    {
+      "tag": "H2",
+      "text": "What’s included.",
+      "font": "\"Silvana Text\", \"EB Garamond\", serif",
+      "size": "66.96px",
+      "weight": "300",
+      "color": "rgb(255, 255, 255)"
+    },
+    {
+      "tag": "H3",
+      "text": "114 Courses",
+      "font": "futura-100, futura-100-book, futura-pt, system-ui, sans-serif",
+      "size": "20px",
+      "weight": "500",
+      "color": "rgb(232, 232, 232)"
+    },
+    {
+      "tag": "H3",
+      "text": "Access Everywhere",
+      "font": "futura-100, futura-100-book, futura-pt, system-ui, sans-serif",
+      "size": "20px",
+      "weight": "500",
+      "color": "rgb(232, 232, 232)"
+    },
+    {
+      "tag": "H3",
+      "text": "21st Century Learning",
+      "font": "futura-100, futura-100-book, futura-pt, system-ui, sans-serif",
+      "size": "20px",
+      "weight": "500",
+      "color": "rgb(232, 232, 232)"
+    },
+    {
+      "tag": "H3",
+      "text": "Assess Your Knowledge",
+      "font": "futura-100, futura-100-book, futura-pt, system-ui, sans-serif",
+      "size": "20px",
+      "weight": "500",
+      "color": "rgb(232, 232, 232)"
+    },
+    {
+      "tag": "H3",
+      "text": "A Curriculum to Guide You",
+      "font": "futura-100, futura-100-book, futura-pt, system-ui, sans-serif",
+      "size": "20px",
+      "weight": "500",
+      "color": "rgb(232, 232, 232)"
+    },
+    {
+      "tag": "H3",
+      "text": "Join the Quad",
+      "font": "futura-100, futura-100-book, futura-pt, system-ui, sans-serif",
+      "size": "20px",
+      "weight": "500",
+      "color": "rgb(232, 232, 232)"
+    },
+    {
+      "tag": "H2",
+      "text": "A solid foundation.\nAn open horizon.",
+      "font": "\"Silvana Text\", \"EB Garamond\", serif",
+      "size": "66.96px",
+      "weight": "300",
+      "color": "rgb(255, 255, 255)"
+    },
+    {
+      "tag": "H3",
+      "text": "Vulpes Novus",
+      "font": "\"Silvana Text\", \"EB Garamond\", serif",
+      "size": "24px",
+      "weight": "400",
+      "color": "rgb(115, 135, 149)"
+    },
+    {
+      "tag": "H3",
+      "text": "Cervus Veritatis",
+      "font": "\"Silvana Text\", \"EB Garamond\", serif",
+      "size": "24px",
+      "weight": "400",
+      "color": "rgb(115, 135, 149)"
+    },
+    {
+      "tag": "H3",
+      "text": "Aquila Praestans",
+      "font": "\"Silvana Text\", \"EB Garamond\", serif",
+      "size": "24px",
+      "weight": "400",
+      "color": "rgb(115, 135, 149)"
+    },
+    {
+      "tag": "H3",
+      "text": "Leo Sapientiae",
+      "font": "\"Silvana Text\", \"EB Garamond\", serif",
+      "size": "24px",
+      "weight": "400",
+      "color": "rgb(115, 135, 149)"
+    },
+    {
+      "tag": "H2",
+      "text": "FROM OUR FACULTY",
+      "font": "futura-100, futura-100-book, futura-pt, system-ui, sans-serif",
+      "size": "14px",
+      "weight": "500",
+      "color": "rgb(153, 153, 153)"
+    },
+    {
+      "tag": "H2",
+      "text": "Choose your plan.",
+      "font": "\"Silvana Text\", \"EB Garamond\", serif",
+      "size": "66.96px",
+      "weight": "300",
+      "color": "rgb(255, 255, 255)"
+    },
+    {
+      "tag": "H2",
+      "text": "Questions and Answers",
+      "font": "\"Silvana Text\", \"EB Garamond\", serif",
+      "size": "66.96px",
+      "weight": "300",
+      "color": "rgb(255, 255, 255)"
+    },
+    {
+      "tag": "H2",
+      "text": "Learn Anywhere",
+      "font": "\"Silvana Text\", \"EB Garamond\", serif",
+      "size": "43.2px",
+      "weight": "300",
+      "color": "rgb(23, 23, 25)"
+    },
+    {
+      "tag": "H2",
+      "text": "A Better Way to Learn",
+      "font": "\"Silvana Text\", \"EB Garamond\", serif",
+      "size": "43.2px",
+      "weight": "300",
+      "color": "rgb(23, 23, 25)"
+    },
+    {
+      "tag": "H3",
+      "text": "Keep the Moments That Matter",
+      "font": "futura-100-book, futura-pt, system-ui, sans-serif",
+      "size": "19px",
+      "weight": "400",
+      "color": "rgb(23, 23, 25)"
+    },
+    {
+      "tag": "H2",
+      "text": "Assess Your Knowledge",
+      "font": "\"Silvana Text\", \"EB Garamond\", serif",
+      "size": "43.2px",
+      "weight": "300",
+      "color": "rgb(23, 23, 25)"
+    },
+    {
+      "tag": "H2",
+      "text": "Explore the curriculum.",
+      "font": "\"Silvana Text\", \"EB Garamond\", serif",
+      "size": "48px",
+      "weight": "300",
+      "color": "rgb(23, 23, 25)"
+    },
+    {
+      "tag": "H3",
+      "text": "Semester 1",
+      "font": "\"Silvana Text\", \"EB Garamond\", serif",
+      "size": "35px",
+      "weight": "300",
+      "color": "rgb(23, 23, 25)"
+    },
+    {
+      "tag": "H2",
+      "text": "Discuss what you’re learning.",
+      "font": "\"Silvana Text\", \"EB Garamond\", serif",
+      "size": "43.2px",
+      "weight": "300",
+      "color": "rgb(23, 23, 25)"
+    },
+    {
+      "tag": "H2",
+      "text": "Every step adds up.",
+      "font": "\"Silvana Text\", \"EB Garamond\", serif",
+      "size": "43px",
+      "weight": "300",
+      "color": "rgb(23, 23, 25)"
+    },
+    {
+      "tag": "H3",
+      "text": "Vulpes Novus",
+      "font": "\"Silvana Text\", \"EB Garamond\", serif",
+      "size": "25px",
+      "weight": "400",
+      "color": "rgb(23, 23, 25)"
+    },
+    {
+      "tag": "H3",
+      "text": "Cervus Veritatis",
+      "font": "\"Silvana Text\", \"EB Garamond\", serif",
+      "size": "25px",
+      "weight": "400",
+      "color": "rgb(23, 23, 25)"
+    },
+    {
+      "tag": "H3",
+      "text": "Aquila Praestans",
+      "font": "\"Silvana Text\", \"EB Garamond\", serif",
+      "size": "25px",
+      "weight": "400",
+      "color": "rgb(23, 23, 25)"
+    },
+    {
+      "tag": "H3",
+      "text": "Leo Sapientiae",
+      "font": "\"Silvana Text\", \"EB Garamond\", serif",
+      "size": "25px",
+      "weight": "400",
+      "color": "rgb(23, 23, 25)"
+    },
+    {
+      "tag": "H2",
+      "text": "The Academy Library",
+      "font": "\"Silvana Text\", \"EB Garamond\", serif",
+      "size": "38px",
+      "weight": "300",
+      "color": "rgb(232, 232, 232)"
+    },
+    {
+      "tag": "H3",
+      "text": "Psychology",
+      "font": "futura-100, futura-100-book, futura-pt, system-ui, sans-serif",
+      "size": "22px",
+      "weight": "500",
+      "color": "rgb(232, 232, 232)"
+    },
+    {
+      "tag": "H3",
+      "text": "Philosophy",
+      "font": "futura-100, futura-100-book, futura-pt, system-ui, sans-serif",
+      "size": "22px",
+      "weight": "500",
+      "color": "rgb(232, 232, 232)"
+    },
+    {
+      "tag": "H3",
+      "text": "Science",
+      "font": "futura-100, futura-100-book, futura-pt, system-ui, sans-serif",
+      "size": "22px",
+      "weight": "500",
+      "color": "rgb(232, 232, 232)"
+    },
+    {
+      "tag": "H3",
+      "text": "Religion",
+      "font": "futura-100, futura-100-book, futura-pt, system-ui, sans-serif",
+      "size": "22px",
+      "weight": "500",
+      "color": "rgb(232, 232, 232)"
+    },
+    {
+      "tag": "H3",
+      "text": "History",
+      "font": "futura-100, futura-100-book, futura-pt, system-ui, sans-serif",
+      "size": "22px",
+      "weight": "500",
+      "color": "rgb(232, 232, 232)"
+    },
+    {
+      "tag": "H3",
+      "text": "Humanities",
+      "font": "futura-100, futura-100-book, futura-pt, system-ui, sans-serif",
+      "size": "22px",
+      "weight": "500",
+      "color": "rgb(232, 232, 232)"
+    },
+    {
+      "tag": "H3",
+      "text": "Mathematics",
+      "font": "futura-100, futura-100-book, futura-pt, system-ui, sans-serif",
+      "size": "22px",
+      "weight": "500",
+      "color": "rgb(232, 232, 232)"
+    },
+    {
+      "tag": "H3",
+      "text": "Social Sciences",
+      "font": "futura-100, futura-100-book, futura-pt, system-ui, sans-serif",
+      "size": "22px",
+      "weight": "500",
+      "color": "rgb(232, 232, 232)"
+    },
+    {
+      "tag": "H3",
+      "text": "More courses",
+      "font": "futura-100, futura-100-book, futura-pt, system-ui, sans-serif",
+      "size": "22px",
+      "weight": "500",
+      "color": "rgb(232, 232, 232)"
+    },
+    {
+      "tag": "H2",
+      "text": "",
+      "font": "\"Silvana Text\", \"EB Garamond\", serif",
+      "size": "48px",
+      "weight": "300",
+      "color": "rgb(28, 28, 30)"
+    },
+    {
+      "tag": "H3",
+      "text": "About",
+      "font": "futura-100, futura-100-book, futura-pt, system-ui, sans-serif",
+      "size": "24px",
+      "weight": "500",
+      "color": "rgb(32, 33, 36)"
+    },
+    {
+      "tag": "H2",
+      "text": "Get every course.$500 a year. Every course.One enrollment.",
+      "font": "\"Silvana Text\", \"EB Garamond\", serif",
+      "size": "50px",
+      "weight": "300",
+      "color": "rgb(20, 20, 20)"
+    },
+    {
+      "tag": "H2",
+      "text": "WATCH THE FIRST LECTURE\nFREE",
+      "font": "\"Silvana Text\", \"EB Garamond\", serif",
+      "size": "16px",
+      "weight": "300",
+      "color": "rgb(255, 255, 255)"
+    }
+  ],
+  "buttons": [
+    {
+      "text": "Sign in",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(127, 127, 127)",
+      "radius": "0px",
+      "font": "futura-100-book, futura-pt, system-ui, sans-serif"
+    },
+    {
+      "text": "ENROLL NOW",
+      "bg": "rgb(255, 255, 255)",
+      "color": "rgb(20, 20, 20)",
+      "radius": "999px",
+      "font": "futura-100, futura-100-book, futura-pt, system-ui, sans-serif"
+    },
+    {
+      "text": "ENROLL NOW",
+      "bg": "rgb(255, 255, 255)",
+      "color": "rgb(20, 20, 20)",
+      "radius": "999px",
+      "font": "futura-100, futura-100-book, futura-pt, system-ui, sans-serif"
+    },
+    {
+      "text": "Previous",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(115, 135, 149)",
+      "radius": "999px",
+      "font": "futura-100-book, futura-pt, system-ui, sans-serif"
+    },
+    {
+      "text": "Next",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(115, 135, 149)",
+      "radius": "999px",
+      "font": "futura-100-book, futura-pt, system-ui, sans-serif"
+    },
+    {
+      "text": "REL 340\nPreview course\n1\n1\n1\n1\n1\n1\nTrend",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(255, 255, 255)",
+      "radius": "9px",
+      "font": "futura-100-book, futura-pt, system-ui, sans-serif"
+    },
+    {
+      "text": "FIN 310\nPreview course\n2\n2\n2\n2\n2\n2\nTrend",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(255, 255, 255)",
+      "radius": "9px",
+      "font": "futura-100-book, futura-pt, system-ui, sans-serif"
+    },
+    {
+      "text": "HIST 240\nPreview course\n3\n3\n3\n3\n3\n3\nTren",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(255, 255, 255)",
+      "radius": "9px",
+      "font": "futura-100-book, futura-pt, system-ui, sans-serif"
+    },
+    {
+      "text": "PHIL 102\nPreview course\n4\n4\n4\n4\n4\n4\nTren",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(255, 255, 255)",
+      "radius": "9px",
+      "font": "futura-100-book, futura-pt, system-ui, sans-serif"
+    },
+    {
+      "text": "PSYC 101\nPreview course\n5\n5\n5\n5\n5\n5\nTren",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(255, 255, 255)",
+      "radius": "9px",
+      "font": "futura-100-book, futura-pt, system-ui, sans-serif"
+    }
+  ],
+  "sections": [
+    {
+      "idx": 0,
+      "tag": "HEADER",
+      "id": "",
+      "class": "learn-topbar is-past-hero svelte-1kuvbpa",
+      "heading": "",
+      "bg": "rgba(20, 20, 20, 0.76)"
+    },
+    {
+      "idx": 1,
+      "tag": "DIV",
+      "id": "",
+      "class": "",
+      "heading": "Learn how to think.\nNot what to think.",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "idx": 2,
+      "tag": "SECTION",
+      "id": "",
+      "class": "learn-hero is-arriving svelte-gj1bhq",
+      "heading": "Learn how to think.\nNot what to think.",
+      "bg": "rgb(20, 20, 20)"
+    },
+    {
+      "idx": 3,
+      "tag": "DIV",
+      "id": "",
+      "class": "credentials svelte-bii0q0",
+      "heading": "",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "idx": 4,
+      "tag": "DIV",
+      "id": "",
+      "class": "ribbon section svelte-1nso7dw",
+      "heading": "",
+      "bg": "rgb(25, 26, 27)"
+    },
+    {
+      "idx": 5,
+      "tag": "SECTION",
+      "id": "learn-library",
+      "class": "learn-section library svelte-1pnfaf3",
+      "heading": "Filmed like a movie.\nTaught like a seminar.",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "idx": 6,
+      "tag": "SECTION",
+      "id": "learn-faculty",
+      "class": "learn-section learn-atmosphere faculty svelte-irqbym",
+      "heading": "The world’s finest professors.",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "idx": 7,
+      "tag": "SECTION",
+      "id": "learn-included",
+      "class": "learn-section learn-atmosphere benefits svelte-1slkpze",
+      "heading": "What’s included.",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "idx": 8,
+      "tag": "SECTION",
+      "id": "",
+      "class": "panel clip svelte-1y66znd",
+      "heading": "",
+      "bg": "rgba(40, 40, 42, 0.97)"
+    },
+    {
+      "idx": 9,
+      "tag": "HEADER",
+      "id": "",
+      "class": "svelte-9gd6m1",
+      "heading": "",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "idx": 10,
+      "tag": "HEADER",
+      "id": "",
+      "class": "svelte-9gd6m1",
+      "heading": "",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "idx": 11,
+      "tag": "HEADER",
+      "id": "",
+      "class": "svelte-9gd6m1",
+      "heading": "",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "idx": 12,
+      "tag": "HEADER",
+      "id": "",
+      "class": "svelte-9gd6m1",
+      "heading": "",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "idx": 13,
+      "tag": "HEADER",
+      "id": "",
+      "class": "svelte-9gd6m1",
+      "heading": "",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "idx": 14,
+      "tag": "HEADER",
+      "id": "",
+      "class": "svelte-9gd6m1",
+      "heading": "",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "idx": 15,
+      "tag": "HEADER",
+      "id": "",
+      "class": "svelte-9gd6m1",
+      "heading": "",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "idx": 16,
+      "tag": "HEADER",
+      "id": "",
+      "class": "svelte-9gd6m1",
+      "heading": "",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "idx": 17,
+      "tag": "HEADER",
+      "id": "",
+      "class": "svelte-9gd6m1",
+      "heading": "",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "idx": 18,
+      "tag": "HEADER",
+      "id": "",
+      "class": "svelte-9gd6m1",
+      "heading": "",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "idx": 19,
+      "tag": "HEADER",
+      "id": "",
+      "class": "svelte-9gd6m1",
+      "heading": "",
+      "bg": "rgba(0, 0, 0, 0)"
+    }
+  ]
+}

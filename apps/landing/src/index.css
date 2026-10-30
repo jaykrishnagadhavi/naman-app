@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Default: Cinematic Near-Black Teal */
+  --color-bg-base: #040C0E;
+  --color-surface-1: #081619;
+  --color-surface-2: #0E2024;
+  --color-surface-3: #152B30;
+  --color-border: #1A373E;
+  --color-accent: #F5871F;
+  --color-accent-hover: #FF9E3B;
+  --color-accent-dark: #D9730D;
+  --color-accent-subtle: rgba(245, 135, 31, 0.12);
+  --color-text-title: #F8FAFA;
+  --color-text-body: #E1E8EA;
+  --color-text-muted: #8D9FA4;
+
+  /* Art-of-Conversation warm cream paper bands */
+  --color-paper-bg: #F7F4EB;
+  --color-paper-card: #EFECE1;
+  --color-paper-border: #E0DBD0;
+  --color-paper-text: #142225;
+  --color-paper-muted: #52676B;
+}
+
+.light {
+  --color-bg-base: #F8FAFB;
+  --color-surface-1: #FFFFFF;
+  --color-surface-2: #F0F4F6;
+  --color-surface-3: #E4EBEE;
+  --color-border: #D6E1E4;
+  --color-accent: #E0760E;
+  --color-accent-hover: #F5871F;
+  --color-accent-dark: #B85F08;
+  --color-accent-subtle: rgba(224, 118, 14, 0.12);
+  --color-text-title: #0C1A1D;
+  --color-text-body: #233539;
+  --color-text-muted: #5A7075;
+
+  --color-paper-bg: #F7F4EB;
+  --color-paper-card: #EFECE1;
+  --color-paper-border: #E0DBD0;
+  --color-paper-text: #142225;
+  --color-paper-muted: #52676B;
+}
+
+body {
+  background-color: var(--color-bg-base);
+  color: var(--color-text-body);
+  font-family: 'Plus Jakarta Sans', Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+

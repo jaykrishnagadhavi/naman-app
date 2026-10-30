@@ -1,0 +1,485 @@
+{
+  "title": "Master the Art of Conversation",
+  "fonts": [
+    "sans-serif",
+    "\"DM Sans\", sans-serif",
+    "\"DM Serif Display\", sans-serif",
+    "\"DM Mono\", sans-serif"
+  ],
+  "colors": [
+    "rgb(0, 0, 0)",
+    "rgb(51, 51, 51)",
+    "rgb(251, 252, 254)",
+    "rgb(238, 242, 245)",
+    "rgb(157, 171, 169)",
+    "rgb(0, 0, 238)",
+    "rgb(196, 84, 191)",
+    "rgb(255, 255, 255)",
+    "rgb(0, 100, 102)",
+    "rgb(141, 37, 122)"
+  ],
+  "bgColors": [
+    "rgb(0, 0, 0)",
+    "rgb(251, 252, 254)",
+    "rgb(9, 10, 10)",
+    "rgb(20, 69, 82)",
+    "rgb(240, 240, 240)",
+    "rgb(255, 255, 255)",
+    "rgba(255, 255, 255, 0.4)",
+    "rgb(238, 242, 245)",
+    "rgb(49, 34, 68)",
+    "rgb(196, 84, 191)"
+  ],
+  "headings": [
+    {
+      "tag": "H1",
+      "text": "Get better at\ntalking to people",
+      "font": "\"DM Serif Display\", sans-serif",
+      "size": "21.6px",
+      "weight": "400",
+      "color": "rgb(251, 252, 254)"
+    },
+    {
+      "tag": "H1",
+      "text": "Get better at\ntalking to people",
+      "font": "\"DM Serif Display\", sans-serif",
+      "size": "72px",
+      "weight": "400",
+      "color": "rgb(251, 252, 254)"
+    },
+    {
+      "tag": "H1",
+      "text": "Get better at talking to people",
+      "font": "\"DM Serif Display\", sans-serif",
+      "size": "72px",
+      "weight": "400",
+      "color": "rgb(251, 252, 254)"
+    },
+    {
+      "tag": "H2",
+      "text": "Ramesh and Suresh",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "56.016px",
+      "weight": "500",
+      "color": "rgb(238, 242, 245)"
+    },
+    {
+      "tag": "H3",
+      "text": "Ramesh",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "31.968px",
+      "weight": "700",
+      "color": "rgb(251, 252, 254)"
+    },
+    {
+      "tag": "H3",
+      "text": "Suresh",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "31.968px",
+      "weight": "700",
+      "color": "rgb(251, 252, 254)"
+    },
+    {
+      "tag": "H2",
+      "text": "Let's talk\nabout YOU",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "56.016px",
+      "weight": "500",
+      "color": "rgb(0, 100, 102)"
+    },
+    {
+      "tag": "H2",
+      "text": "Snap back...",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "72px",
+      "weight": "500",
+      "color": "rgb(251, 252, 254)"
+    },
+    {
+      "tag": "H1",
+      "text": "Art of Conversation",
+      "font": "\"DM Serif Display\", sans-serif",
+      "size": "96.048px",
+      "weight": "400",
+      "color": "rgb(251, 252, 254)"
+    },
+    {
+      "tag": "H2",
+      "text": "How it works?",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "56.016px",
+      "weight": "500",
+      "color": "rgb(251, 252, 254)"
+    },
+    {
+      "tag": "H3",
+      "text": "Get familiar with the framework",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "31.968px",
+      "weight": "700",
+      "color": "rgb(51, 51, 51)"
+    },
+    {
+      "tag": "H3",
+      "text": "Execute your skills",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "31.968px",
+      "weight": "700",
+      "color": "rgb(51, 51, 51)"
+    },
+    {
+      "tag": "H3",
+      "text": "Stay updated with new topics & lessons",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "31.968px",
+      "weight": "700",
+      "color": "rgb(51, 51, 51)"
+    },
+    {
+      "tag": "H3",
+      "text": "Become a pro conversationalist",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "31.968px",
+      "weight": "700",
+      "color": "rgb(51, 51, 51)"
+    },
+    {
+      "tag": "H2",
+      "text": "How it works?",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "72px",
+      "weight": "500",
+      "color": "rgb(251, 252, 254)"
+    },
+    {
+      "tag": "H3",
+      "text": "Get familiar with the framework",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "28.8px",
+      "weight": "700",
+      "color": "rgb(251, 252, 254)"
+    },
+    {
+      "tag": "H3",
+      "text": "Execute your skills",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "28.8px",
+      "weight": "700",
+      "color": "rgb(251, 252, 254)"
+    },
+    {
+      "tag": "H3",
+      "text": "Stay updated with new topics & lessons",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "28.8px",
+      "weight": "700",
+      "color": "rgb(251, 252, 254)"
+    },
+    {
+      "tag": "H3",
+      "text": "Become a pro conversationalist",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "28.8px",
+      "weight": "700",
+      "color": "rgb(251, 252, 254)"
+    },
+    {
+      "tag": "H2",
+      "text": "Course Contents",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "56.016px",
+      "weight": "500",
+      "color": "rgb(141, 37, 122)"
+    },
+    {
+      "tag": "H3",
+      "text": "Intent and Content",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "31.968px",
+      "weight": "700",
+      "color": "rgb(141, 37, 122)"
+    },
+    {
+      "tag": "H3",
+      "text": "Walking into a conversation",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "31.968px",
+      "weight": "700",
+      "color": "rgb(141, 37, 122)"
+    },
+    {
+      "tag": "H3",
+      "text": "Fishing",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "31.968px",
+      "weight": "700",
+      "color": "rgb(141, 37, 122)"
+    },
+    {
+      "tag": "H3",
+      "text": "Like vs Respect vs Trust",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "31.968px",
+      "weight": "700",
+      "color": "rgb(141, 37, 122)"
+    },
+    {
+      "tag": "H3",
+      "text": "Meaningful Questions",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "31.968px",
+      "weight": "700",
+      "color": "rgb(141, 37, 122)"
+    },
+    {
+      "tag": "H3",
+      "text": "Risk",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "31.968px",
+      "weight": "700",
+      "color": "rgb(141, 37, 122)"
+    },
+    {
+      "tag": "H3",
+      "text": "Comfort",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "31.968px",
+      "weight": "700",
+      "color": "rgb(141, 37, 122)"
+    },
+    {
+      "tag": "H3",
+      "text": "Asking for what you want",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "31.968px",
+      "weight": "700",
+      "color": "rgb(141, 37, 122)"
+    },
+    {
+      "tag": "H3",
+      "text": "Walking out of a conversation",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "31.968px",
+      "weight": "700",
+      "color": "rgb(141, 37, 122)"
+    },
+    {
+      "tag": "H3",
+      "text": "Preparing for conversation",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "31.968px",
+      "weight": "700",
+      "color": "rgb(141, 37, 122)"
+    },
+    {
+      "tag": "H3",
+      "text": "Signals",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "31.968px",
+      "weight": "700",
+      "color": "rgb(141, 37, 122)"
+    },
+    {
+      "tag": "H3",
+      "text": "Expressions and Tonality",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "31.968px",
+      "weight": "700",
+      "color": "rgb(141, 37, 122)"
+    },
+    {
+      "tag": "H3",
+      "text": "Body Language",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "31.968px",
+      "weight": "700",
+      "color": "rgb(141, 37, 122)"
+    },
+    {
+      "tag": "H3",
+      "text": "Storytelling",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "31.968px",
+      "weight": "700",
+      "color": "rgb(141, 37, 122)"
+    },
+    {
+      "tag": "H3",
+      "text": "Social Confidence",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "31.968px",
+      "weight": "700",
+      "color": "rgb(141, 37, 122)"
+    },
+    {
+      "tag": "H3",
+      "text": "How to be Mr/Miss Alpha in a group",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "31.968px",
+      "weight": "700",
+      "color": "rgb(141, 37, 122)"
+    },
+    {
+      "tag": "H3",
+      "text": "How to be Mr/Miss Exciting to the other person",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "31.968px",
+      "weight": "700",
+      "color": "rgb(141, 37, 122)"
+    },
+    {
+      "tag": "H3",
+      "text": "How to be Mr/Miss Persuasive in professional environment",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "31.968px",
+      "weight": "700",
+      "color": "rgb(141, 37, 122)"
+    },
+    {
+      "tag": "H3",
+      "text": "How to be Mr/Miss Charming in a one-to-one situation",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "31.968px",
+      "weight": "700",
+      "color": "rgb(141, 37, 122)"
+    },
+    {
+      "tag": "H3",
+      "text": "How to be Mr/Miss Right for the situation",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "31.968px",
+      "weight": "700",
+      "color": "rgb(141, 37, 122)"
+    },
+    {
+      "tag": "H2",
+      "text": "Course Contents",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "56.016px",
+      "weight": "500",
+      "color": "rgb(141, 37, 122)"
+    },
+    {
+      "tag": "H2",
+      "text": "Prakhar Gupta",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "56.016px",
+      "weight": "500",
+      "color": "rgb(251, 252, 254)"
+    },
+    {
+      "tag": "H2",
+      "text": "What people are saying",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "72px",
+      "weight": "500",
+      "color": "rgb(251, 252, 254)"
+    },
+    {
+      "tag": "H2",
+      "text": "Frequently asked questions",
+      "font": "\"DM Sans\", sans-serif",
+      "size": "72px",
+      "weight": "500",
+      "color": "rgb(251, 252, 254)"
+    },
+    {
+      "tag": "H1",
+      "text": "Become a master of\nconversations",
+      "font": "\"DM Serif Display\", sans-serif",
+      "size": "72px",
+      "weight": "400",
+      "color": "rgb(251, 252, 254)"
+    },
+    {
+      "tag": "H1",
+      "text": "Get better at talking to people",
+      "font": "\"DM Serif Display\", sans-serif",
+      "size": "21.6px",
+      "weight": "400",
+      "color": "rgb(251, 252, 254)"
+    }
+  ],
+  "buttons": [
+    {
+      "text": "JOIN NOW",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(238, 242, 245)",
+      "radius": "7px",
+      "font": "\"DM Sans\", sans-serif"
+    },
+    {
+      "text": "JOIN NOW",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(238, 242, 245)",
+      "radius": "7px",
+      "font": "\"DM Sans\", sans-serif"
+    },
+    {
+      "text": "JOIN NOW",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(238, 242, 245)",
+      "radius": "7px",
+      "font": "\"DM Sans\", sans-serif"
+    },
+    {
+      "text": "",
+      "bg": "rgb(240, 240, 240)",
+      "color": "rgb(51, 51, 51)",
+      "radius": "0px",
+      "font": "\"DM Sans\", sans-serif"
+    },
+    {
+      "text": "",
+      "bg": "rgb(240, 240, 240)",
+      "color": "rgb(51, 51, 51)",
+      "radius": "0px",
+      "font": "\"DM Sans\", sans-serif"
+    },
+    {
+      "text": "",
+      "bg": "rgb(240, 240, 240)",
+      "color": "rgb(51, 51, 51)",
+      "radius": "0px",
+      "font": "\"DM Sans\", sans-serif"
+    },
+    {
+      "text": "",
+      "bg": "rgb(240, 240, 240)",
+      "color": "rgb(51, 51, 51)",
+      "radius": "0px",
+      "font": "\"DM Sans\", sans-serif"
+    },
+    {
+      "text": "",
+      "bg": "rgb(240, 240, 240)",
+      "color": "rgb(51, 51, 51)",
+      "radius": "0px",
+      "font": "\"DM Sans\", sans-serif"
+    },
+    {
+      "text": "",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(251, 252, 254)",
+      "radius": "50%",
+      "font": "\"DM Sans\", sans-serif"
+    },
+    {
+      "text": "",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(251, 252, 254)",
+      "radius": "50%",
+      "font": "\"DM Sans\", sans-serif"
+    }
+  ],
+  "sections": [
+    {
+      "idx": 0,
+      "tag": "FOOTER",
+      "id": "footer",
+      "class": "footer",
+      "heading": "",
+      "bg": "rgba(0, 0, 0, 0)"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+# Supabase CLI configuration for ABrainoConscious
+project_id = "abrainoconscious"
+
+[api]
+port = 54321
+schemas = ["public", "storage", "graphql_public"]
+
+[db]
+port = 54322
+
+[studio]
+port = 54323
+
+[auth]
+site_url = "http://localhost:5173"
+additional_redirect_urls = ["http://localhost:5174", "http://localhost:5175"]
+jwt_expiry = 3600
+
+[storage]
+file_size_limit = "10MiB"
+

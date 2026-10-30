@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@abrainoconscious/ui": ["packages/ui/src/index.ts"],
+      "@abrainoconscious/ui/*": ["packages/ui/src/*"],
+      "@abrainoconscious/shared": ["packages/shared/src/index.ts"],
+      "@abrainoconscious/shared/*": ["packages/shared/src/*"]
+    }
+  },
+  "include": [
+    "packages/*/src/**/*",
+    "apps/*/src/**/*"
+  ]
+}
+

@@ -1,0 +1,23 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Build outputs
+dist
+build
+.vite
+.turbo
+
+# Temporary / testing
+.temp-chrome
+*.log
+
+# Environment files
+.env
+.env*.local
+!.env.example
+
+# OS files
+.DS_Store
+Thumbs.db
+
