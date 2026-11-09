@@ -1,4 +1,4 @@
-import React, { Component, ErrorInfo, ReactNode, useState } from 'react';
+import React, { Component, ErrorInfo, ReactNode, useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { HelmetProvider } from 'react-helmet-async';
@@ -86,6 +86,16 @@ const AppContent: React.FC = () => {
   const location = useLocation();
   const [isDark, setIsDark] = useState(true);
   const { user, profile, signOut, supabase } = useAuth();
+
+  useEffect(() => {
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
+    } else {
+      document.documentElement.classList.add('light');
+      document.documentElement.classList.remove('dark');
+    }
+  }, [isDark]);
 
   // Student Unread Announcements & Notifications Count
   const { data: unreadData } = useQuery({

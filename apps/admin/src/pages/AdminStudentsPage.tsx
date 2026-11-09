@@ -9,6 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
+  DialogBody,
   DialogFooter,
 } from '@abrainoconscious/ui';
 import {
@@ -463,7 +464,7 @@ export const AdminStudentsPage: React.FC = () => {
 
       {/* 1. Modal: Enrol Student in Program */}
       <Dialog open={enrollModalOpen} onOpenChange={setEnrollModalOpen}>
-        <DialogContent className="max-w-lg border border-[#1A373E] bg-[#081619] p-6 text-white space-y-4">
+        <DialogContent size="lg">
           <DialogHeader>
             <DialogTitle className="font-serif text-lg font-bold text-white flex items-center gap-2">
               <UserPlus className="h-5 w-5 text-amber-500" />
@@ -474,14 +475,14 @@ export const AdminStudentsPage: React.FC = () => {
             </DialogDescription>
           </DialogHeader>
 
-          {enrollMutation.isError && (
-            <ErrorDetailsAlert
-              title="Enrollment failed"
-              error={enrollMutation.error}
-            />
-          )}
+          <DialogBody className="space-y-4 text-xs">
+            {enrollMutation.isError && (
+              <ErrorDetailsAlert
+                title="Enrollment failed"
+                error={enrollMutation.error}
+              />
+            )}
 
-          <div className="space-y-4 text-xs">
             {/* Student ID or Email */}
             <div className="space-y-1">
               <label className="font-semibold text-white">Student Email or Profile UUID *</label>
@@ -543,9 +544,9 @@ export const AdminStudentsPage: React.FC = () => {
                 Send welcome notification to student dashboard immediately
               </label>
             </div>
-          </div>
+          </DialogBody>
 
-          <DialogFooter className="flex justify-end gap-2 pt-2">
+          <DialogFooter>
             <Button
               variant="outline"
               size="sm"
@@ -568,7 +569,7 @@ export const AdminStudentsPage: React.FC = () => {
 
       {/* 2. Modal: Confirm Revoke Enrollment */}
       <Dialog open={revokeModalOpen} onOpenChange={setRevokeModalOpen}>
-        <DialogContent className="max-w-md border border-rose-500/40 bg-[#081619] p-6 text-white space-y-4">
+        <DialogContent size="md">
           <DialogHeader>
             <DialogTitle className="font-serif text-lg font-bold text-rose-400 flex items-center gap-2">
               <ShieldAlert className="h-5 w-5 text-rose-500" />
@@ -579,32 +580,34 @@ export const AdminStudentsPage: React.FC = () => {
             </DialogDescription>
           </DialogHeader>
 
-          {revokeMutation.isError && (
-            <ErrorDetailsAlert
-              title="Revocation failed"
-              error={revokeMutation.error}
-            />
-          )}
+          <DialogBody className="space-y-4 text-xs">
+            {revokeMutation.isError && (
+              <ErrorDetailsAlert
+                title="Revocation failed"
+                error={revokeMutation.error}
+              />
+            )}
 
-          {enrollmentToRevoke && (
-            <div className="rounded-xl border border-rose-900/40 bg-rose-950/20 p-3 text-xs space-y-1">
-              <div>Student: <strong className="text-white">{enrollmentToRevoke.studentName}</strong></div>
-              <div>Program: <strong className="text-white">{enrollmentToRevoke.programTitle}</strong></div>
+            {enrollmentToRevoke && (
+              <div className="rounded-xl border border-rose-900/40 bg-rose-950/20 p-3 text-xs space-y-1">
+                <div>Student: <strong className="text-white">{enrollmentToRevoke.studentName}</strong></div>
+                <div>Program: <strong className="text-white">{enrollmentToRevoke.programTitle}</strong></div>
+              </div>
+            )}
+
+            <div className="space-y-1 text-xs">
+              <label className="font-semibold text-white">Reason for Revocation (Logged in Audit Log)</label>
+              <textarea
+                rows={2}
+                placeholder="e.g. Requested refund, policy violation, or duplicate account"
+                value={revokeReason}
+                onChange={(e) => setRevokeReason(e.target.value)}
+                className="w-full rounded-lg border border-[#1A373E] bg-[#040C0E] p-2 text-xs text-white focus:border-rose-500 focus:outline-none"
+              />
             </div>
-          )}
+          </DialogBody>
 
-          <div className="space-y-1 text-xs">
-            <label className="font-semibold text-white">Reason for Revocation (Logged in Audit Log)</label>
-            <textarea
-              rows={2}
-              placeholder="e.g. Requested refund, policy violation, or duplicate account"
-              value={revokeReason}
-              onChange={(e) => setRevokeReason(e.target.value)}
-              className="w-full rounded-lg border border-[#1A373E] bg-[#040C0E] p-2 text-xs text-white focus:border-rose-500 focus:outline-none"
-            />
-          </div>
-
-          <DialogFooter className="flex justify-end gap-2 pt-2">
+          <DialogFooter>
             <Button
               variant="outline"
               size="sm"

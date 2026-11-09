@@ -9,6 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
+  DialogBody,
   DialogFooter,
   CATEGORY_LABELS,
   PillarCategory,
@@ -1227,27 +1228,37 @@ export const AdminProgramsPage: React.FC = () => {
         open={!!unpublishConfirmProgram}
         onOpenChange={(open) => !open && setUnpublishConfirmProgram(null)}
       >
-        <DialogContent className="border-[#1A373E] bg-[#081619] text-white sm:max-w-md">
+        <DialogContent size="md">
           <DialogHeader>
             <div className="flex items-center gap-2 text-amber-400">
               <AlertTriangle className="h-5 w-5" />
               <DialogTitle className="font-serif text-lg">Active Enrollments Detected</DialogTitle>
             </div>
-            <DialogDescription className="text-xs text-[#8D9FA4] pt-2">
+            <DialogDescription className="text-xs text-[#8D9FA4]">
+              Notice regarding existing enrolled students
+            </DialogDescription>
+          </DialogHeader>
+
+          <DialogBody className="text-xs text-[#8D9FA4] space-y-2">
+            <p>
               "{unpublishConfirmProgram?.title}" currently has{' '}
               <strong className="text-white">
                 {unpublishConfirmProgram?.enrollments?.[0]?.count || 0} active student enrollments
               </strong>
-              . Unpublishing will hide this program from the student store and catalog, but existing
+              .
+            </p>
+            <p>
+              Unpublishing will hide this program from the student store and catalog, but existing
               enrolled students will retain access in their student dashboard.
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter className="mt-4 gap-2">
-            <Button variant="ghost" size="sm" onClick={() => setUnpublishConfirmProgram(null)}>
+            </p>
+          </DialogBody>
+
+          <DialogFooter>
+            <Button variant="outline" size="sm" onClick={() => setUnpublishConfirmProgram(null)}>
               Cancel
             </Button>
             <Button
-              variant="primary"
+              variant="cta"
               size="sm"
               onClick={() => {
                 if (unpublishConfirmProgram) {
@@ -1271,25 +1282,27 @@ export const AdminProgramsPage: React.FC = () => {
           }
         }}
       >
-        <DialogContent className="border-[#1A373E] bg-[#081619] text-white sm:max-w-md">
+        <DialogContent size="md">
           <DialogHeader>
             <div className="flex items-center gap-2 text-red-400">
               <AlertTriangle className="h-5 w-5" />
               <DialogTitle className="font-serif text-lg">Delete Program Permanently</DialogTitle>
             </div>
-            <DialogDescription className="text-xs text-[#8D9FA4] pt-2 space-y-2">
-              <p>
-                This action <strong className="text-red-400">CANNOT</strong> be undone. It will
-                permanently delete the program and record a permanent deletion entry in the audit log.
-              </p>
-              <p>
-                To confirm, please type the exact title:{' '}
-                <span className="font-semibold text-white">"{deleteModalProgram?.title}"</span>
-              </p>
+            <DialogDescription className="text-xs text-[#8D9FA4]">
+              This action cannot be undone. Permanent audit entry will be logged.
             </DialogDescription>
           </DialogHeader>
 
-          <div className="py-2">
+          <DialogBody className="space-y-4 text-xs">
+            <p className="text-[#8D9FA4]">
+              This action <strong className="text-red-400">CANNOT</strong> be undone. It will
+              permanently delete the program and record a permanent deletion entry in the audit log.
+            </p>
+            <p className="text-[#8D9FA4]">
+              To confirm, please type the exact title:{' '}
+              <span className="font-semibold text-white">"{deleteModalProgram?.title}"</span>
+            </p>
+
             <input
               type="text"
               placeholder="Type program title exactly..."
@@ -1297,11 +1310,11 @@ export const AdminProgramsPage: React.FC = () => {
               onChange={(e) => setDeleteConfirmationInput(e.target.value)}
               className="w-full rounded-xl border border-red-500/40 bg-[#040C0E] px-3 py-2 text-xs text-white focus:border-red-500 focus:outline-none"
             />
-          </div>
+          </DialogBody>
 
-          <DialogFooter className="mt-4 gap-2">
+          <DialogFooter>
             <Button
-              variant="ghost"
+              variant="outline"
               size="sm"
               onClick={() => {
                 setDeleteModalProgram(null);
@@ -1311,7 +1324,7 @@ export const AdminProgramsPage: React.FC = () => {
               Cancel
             </Button>
             <Button
-              variant="primary"
+              variant="danger"
               size="sm"
               disabled={
                 deleteConfirmationInput.trim() !== deleteModalProgram?.title || deleteLoading
@@ -1330,15 +1343,15 @@ export const AdminProgramsPage: React.FC = () => {
         open={bulkCategoryModalOpen}
         onOpenChange={(open) => !open && setBulkCategoryModalOpen(false)}
       >
-        <DialogContent className="border-[#1A373E] bg-[#081619] text-white sm:max-w-md">
+        <DialogContent size="md">
           <DialogHeader>
             <DialogTitle className="font-serif text-lg">Set Pillar Category</DialogTitle>
-            <DialogDescription className="text-xs text-[#8D9FA4] pt-1">
+            <DialogDescription className="text-xs text-[#8D9FA4]">
               Select the new pillar category for the {selectedIds.length} selected programs.
             </DialogDescription>
           </DialogHeader>
 
-          <div className="py-3">
+          <DialogBody className="space-y-3">
             <select
               aria-label="Pillar Category"
               value={targetCategory}
@@ -1350,14 +1363,14 @@ export const AdminProgramsPage: React.FC = () => {
               <option value="academic">Academic Mastery</option>
               <option value="personal">Personal Momentum</option>
             </select>
-          </div>
+          </DialogBody>
 
-          <DialogFooter className="mt-4 gap-2">
-            <Button variant="ghost" size="sm" onClick={() => setBulkCategoryModalOpen(false)}>
+          <DialogFooter>
+            <Button variant="outline" size="sm" onClick={() => setBulkCategoryModalOpen(false)}>
               Cancel
             </Button>
             <Button
-              variant="primary"
+              variant="cta"
               size="sm"
               disabled={bulkActionLoading}
               onClick={handleBulkCategory}

@@ -13,14 +13,14 @@ export const SelectTrigger = React.forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      'flex h-10 w-full items-center justify-between rounded-lg border border-[#1A373E] bg-[#040C0E] px-3 py-2 text-sm text-[#F8FAFA] placeholder-[#8D9FA4]/50 focus:outline-none focus:ring-1 focus:ring-[#F5871F] disabled:cursor-not-allowed disabled:opacity-50',
+      'flex h-10 w-full items-center justify-between rounded-lg border border-[var(--color-border,#1A373E)] bg-[var(--color-bg-base,#040C0E)] px-3 py-2 text-xs sm:text-sm text-[var(--color-text-title,#F8FAFA)] placeholder-[#8D9FA4]/50 focus:outline-none focus:ring-1 focus:ring-[#F5871F] disabled:cursor-not-allowed disabled:opacity-50 transition-colors',
       className
     )}
     {...props}
   >
     {children}
     <SelectPrimitive.Icon asChild>
-      <ChevronDown className="h-4 w-4 opacity-50" />
+      <ChevronDown className="h-4 w-4 opacity-50 shrink-0 ml-2" />
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
 ));
@@ -33,8 +33,9 @@ export const SelectContent = React.forwardRef<
   <SelectPrimitive.Portal>
     <SelectPrimitive.Content
       ref={ref}
+      collisionPadding={8}
       className={cn(
-        'relative z-50 min-w-[8rem] overflow-hidden rounded-lg border border-[#1A373E] bg-[#0E2024] text-[#E1E8EA] shadow-xl animate-fade-in',
+        'relative z-[70] max-h-[min(20rem,var(--radix-select-content-available-height,280px))] min-w-[8rem] overflow-y-auto rounded-lg border border-[var(--color-border,#1A373E)] bg-[var(--color-surface-2,#0E2024)] text-[var(--color-text-body,#E1E8EA)] shadow-2xl animate-fade-in',
         position === 'popper' && 'translate-y-1',
         className
       )}
@@ -70,4 +71,3 @@ export const SelectItem = React.forwardRef<
   </SelectPrimitive.Item>
 ));
 SelectItem.displayName = SelectPrimitive.Item.displayName;
-

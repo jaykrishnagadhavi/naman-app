@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
   Button, Input, Textarea, Card, Badge, Checkbox, Switch,
   Select, SelectTrigger, SelectValue, SelectContent, SelectItem,
-  Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription,
+  Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogBody, DialogFooter,
   DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator,
   Tabs, TabsList, TabsTrigger, TabsContent,
   Table, TableHeader, TableBody, TableRow, TableHead, TableCell,
@@ -189,17 +189,22 @@ export const DesignSystemPage: React.FC = () => {
               <DialogTrigger asChild>
                 <Button variant="secondary">Open Radix Dialog Modal</Button>
               </DialogTrigger>
-              <DialogContent>
+              <DialogContent size="sm">
                 <DialogHeader>
                   <DialogTitle>7-Day Guarantee Assurance</DialogTitle>
                   <DialogDescription>
                     All ABrainoConscious programs come with an unconditional 100% money-back guarantee within 7 days.
                   </DialogDescription>
                 </DialogHeader>
-                <div className="pt-4 flex justify-end gap-2">
+                <DialogBody>
+                  <p className="text-xs text-[var(--color-text-body,#C5D5D8)] leading-relaxed">
+                    If at any point during your first week you feel the program does not serve your growth, simply let our team know for a prompt and courteous full refund.
+                  </p>
+                </DialogBody>
+                <DialogFooter>
                   <Button variant="ghost" size="sm" onClick={() => setDialogOpen(false)}>Close</Button>
                   <Button variant="primary" size="sm" onClick={() => setDialogOpen(false)}>Got It</Button>
-                </div>
+                </DialogFooter>
               </DialogContent>
             </Dialog>
 

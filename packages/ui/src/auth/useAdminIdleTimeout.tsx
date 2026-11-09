@@ -3,6 +3,14 @@ import { useAuth } from './AuthProvider';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Clock } from 'lucide-react';
 import { Button } from '../components/Button';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from '../components/Dialog';
 
 export interface UseAdminIdleTimeoutOptions {
   totalTimeoutMs?: number; // default: 30 minutes (1,800,000 ms)
@@ -102,30 +110,27 @@ export const AdminIdleWarningModal: React.FC<AdminIdleWarningModalProps> = ({
   secondsRemaining,
   onStaySignedIn,
 }) => {
-  if (!show) return null;
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-      <div className="w-full max-w-sm rounded-2xl border border-amber-500/40 bg-[#081619] p-6 text-center text-white shadow-2xl space-y-4">
-        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400">
-          <Clock className="h-6 w-6 animate-pulse" />
-        </div>
-
-        <div className="space-y-1">
-          <h3 className="font-serif text-lg font-bold">Session Inactivity Notice</h3>
-          <p className="text-xs text-[#8D9FA4] leading-relaxed">
+    <Dialog open={show} onOpenChange={(open) => { if (!open) onStaySignedIn(); }}>
+      <DialogContent size="sm">
+        <DialogHeader className="text-center sm:text-center pr-0">
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400">
+            <Clock className="h-6 w-6 animate-pulse" />
+          </div>
+          <DialogTitle className="font-serif text-lg font-bold text-white mt-2">Session Inactivity Notice</DialogTitle>
+          <DialogDescription className="text-xs text-[var(--color-text-muted,#8D9FA4)] leading-relaxed">
             You've been away for a while. For creator safety and platform security, your admin session will lock in{' '}
             <span className="font-bold text-amber-400">{secondsRemaining} seconds</span>.
-          </p>
-        </div>
+          </DialogDescription>
+        </DialogHeader>
 
-        <div className="pt-2">
+        <DialogFooter className="sm:justify-center">
           <Button variant="primary" className="w-full font-bold" onClick={onStaySignedIn}>
             I'm Still Working — Stay Signed In
           </Button>
-        </div>
-      </div>
-    </div>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 };
 

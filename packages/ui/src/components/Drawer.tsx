@@ -1,0 +1,31 @@
+import {
+  Sheet as Drawer,
+  SheetTrigger as DrawerTrigger,
+  SheetClose as DrawerClose,
+  SheetPortal as DrawerPortal,
+  SheetOverlay as DrawerOverlay,
+  SheetContent as DrawerContent,
+  SheetHeader as DrawerHeader,
+  SheetTitle as DrawerTitle,
+  SheetDescription as DrawerDescription,
+  SheetBody as DrawerBody,
+  SheetFooter as DrawerFooter,
+  type SheetContentProps as DrawerContentProps,
+  type SheetSide as DrawerSide,
+} from './Sheet';
+
+export {
+  Drawer,
+  DrawerTrigger,
+  DrawerClose,
+  DrawerPortal,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerDescription,
+  DrawerBody,
+  DrawerFooter,
+  type DrawerContentProps,
+  type DrawerSide,
+};

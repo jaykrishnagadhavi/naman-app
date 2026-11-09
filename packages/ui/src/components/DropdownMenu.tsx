@@ -17,8 +17,9 @@ export const DropdownMenuContent = React.forwardRef<
     <DropdownMenuPrimitive.Content
       ref={ref}
       sideOffset={sideOffset}
+      collisionPadding={8}
       className={cn(
-        'z-50 min-w-[8rem] overflow-hidden rounded-lg border border-[#1A373E] bg-[#0E2024] p-1 text-[#E1E8EA] shadow-xl animate-fade-in text-xs',
+        'z-[70] max-h-[min(20rem,var(--radix-dropdown-menu-content-available-height,280px))] min-w-[8rem] overflow-y-auto rounded-lg border border-[var(--color-border,#1A373E)] bg-[var(--color-surface-2,#0E2024)] p-1 text-[var(--color-text-body,#E1E8EA)] shadow-2xl animate-fade-in text-xs',
         className
       )}
       {...props}

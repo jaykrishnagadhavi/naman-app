@@ -16,7 +16,20 @@ import {
   Search,
   Filter,
 } from 'lucide-react';
-import { useAuth, RichTextEditor, StudentSessionCard, ErrorDetailsAlert } from '@abrainoconscious/ui';
+import {
+  useAuth,
+  RichTextEditor,
+  StudentSessionCard,
+  ErrorDetailsAlert,
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogBody,
+  DialogFooter,
+  Button,
+} from '@abrainoconscious/ui';
 import {
   formatISTDateOnly,
   formatISTTimeOnly,
@@ -1030,154 +1043,142 @@ export const AdminSessionsPage: React.FC = () => {
       {/* ===================================================================== */}
       {/* 1. Schedule Generator Modal */}
       {/* ===================================================================== */}
-      {showGeneratorModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-          <div className="w-full max-w-md rounded-2xl border border-amber-500/40 bg-[#081619] p-6 text-white shadow-2xl">
-            <div className="flex items-center justify-between border-b border-[#1A373E] pb-3">
-              <div className="flex items-center gap-2">
-                <Sparkles className="h-5 w-5 text-amber-400" />
-                <h3 className="font-serif text-lg font-bold text-white">Generate Challenge Days</h3>
-              </div>
-              <button
-                type="button"
-                onClick={() => {
-                  setShowGeneratorModal(false);
-                  setGenModalError(null);
-                }}
-                className="text-[#8D9FA4] hover:text-white"
-              >
-                <X className="h-5 w-5" />
-              </button>
+      <Dialog
+        open={showGeneratorModal}
+        onOpenChange={(open) => {
+          if (!open) {
+            setShowGeneratorModal(false);
+            setGenModalError(null);
+          }
+        }}
+      >
+        <DialogContent size="md">
+          <DialogHeader>
+            <div className="flex items-center gap-2">
+              <Sparkles className="h-5 w-5 text-amber-400" />
+              <DialogTitle>Generate Challenge Days</DialogTitle>
             </div>
+            <DialogDescription>
+              {selectedProgram ? (
+                <span>
+                  Batch create daily session placeholders for{' '}
+                  <strong className="text-white">{selectedProgram.title}</strong> with automated IST timing.
+                </span>
+              ) : (
+                <span className="text-red-400">
+                  No challenge program is currently selected. Please select a challenge program first.
+                </span>
+              )}
+            </DialogDescription>
+          </DialogHeader>
 
+          <DialogBody className="space-y-4">
             {genModalError && (
               <ErrorDetailsAlert
                 error={genModalError}
                 onDismiss={() => setGenModalError(null)}
-                className="mt-3"
               />
             )}
 
-            {selectedProgram ? (
-              <p className="mt-3 text-xs text-[#8D9FA4] leading-relaxed">
-                Batch create daily session placeholders for{' '}
-                <strong className="text-white">{selectedProgram.title}</strong> with automated IST timing.
-              </p>
-            ) : (
-              <div className="mt-3 rounded-xl border border-red-500/40 bg-red-950/20 p-3 text-xs text-red-400">
-                No challenge program is currently selected. Please select a challenge program first.
-              </div>
-            )}
+            <div>
+              <label className="text-xs font-bold text-white block mb-1">Program Start Date (IST)</label>
+              <input
+                type="date"
+                value={genStartDate}
+                onChange={(e) => setGenStartDate(e.target.value)}
+                className="w-full rounded-xl border border-[#1A373E] bg-[#051113] px-3.5 py-2 font-mono text-xs text-white focus:border-amber-500 focus:outline-none"
+              />
+            </div>
 
-            <div className="mt-4 space-y-4">
+            <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-xs font-bold text-white block mb-1">Program Start Date (IST)</label>
+                <label className="text-xs font-bold text-white block mb-1">Default Daily Time (IST)</label>
                 <input
-                  type="date"
-                  value={genStartDate}
-                  onChange={(e) => setGenStartDate(e.target.value)}
+                  type="time"
+                  value={genDailyTime}
+                  onChange={(e) => setGenDailyTime(e.target.value)}
                   className="w-full rounded-xl border border-[#1A373E] bg-[#051113] px-3.5 py-2 font-mono text-xs text-white focus:border-amber-500 focus:outline-none"
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="text-xs font-bold text-white block mb-1">Default Daily Time (IST)</label>
-                  <input
-                    type="time"
-                    value={genDailyTime}
-                    onChange={(e) => setGenDailyTime(e.target.value)}
-                    className="w-full rounded-xl border border-[#1A373E] bg-[#051113] px-3.5 py-2 font-mono text-xs text-white focus:border-amber-500 focus:outline-none"
-                  />
-                </div>
+              <div>
+                <label className="text-xs font-bold text-white block mb-1">Number of Days</label>
+                <input
+                  type="number"
+                  min={1}
+                  max={100}
+                  value={genTotalDays}
+                  onChange={(e) => setGenTotalDays(parseInt(e.target.value, 10) || 1)}
+                  className="w-full rounded-xl border border-[#1A373E] bg-[#051113] px-3.5 py-2 font-mono text-xs text-white focus:border-amber-500 focus:outline-none"
+                />
+              </div>
+            </div>
 
-                <div>
-                  <label className="text-xs font-bold text-white block mb-1">Number of Days</label>
+            {sessions.length > 0 && (
+              <div className="rounded-xl border border-amber-500/40 bg-amber-950/30 p-3 space-y-2">
+                <div className="flex items-center gap-2 text-xs font-bold text-amber-400">
+                  <AlertTriangle className="h-4 w-4" />
+                  <span>Warning: Existing Schedule Detected ({sessions.length} days)</span>
+                </div>
+                <p className="text-[11px] text-[#C5D5D8] leading-relaxed">
+                  Generating a new schedule will replace existing session rows. If students have already attended, regeneration is strictly blocked.
+                </p>
+                <div className="flex items-center gap-2 pt-1">
                   <input
-                    type="number"
-                    min={1}
-                    max={100}
-                    value={genTotalDays}
-                    onChange={(e) => setGenTotalDays(parseInt(e.target.value, 10) || 1)}
-                    className="w-full rounded-xl border border-[#1A373E] bg-[#051113] px-3.5 py-2 font-mono text-xs text-white focus:border-amber-500 focus:outline-none"
+                    type="checkbox"
+                    id="genOverwriteCheckbox"
+                    checked={genOverwrite}
+                    onChange={(e) => setGenOverwrite(e.target.checked)}
+                    className="h-4 w-4 rounded border-[#1A373E] bg-[#081619] text-amber-500 focus:ring-amber-500"
                   />
+                  <label htmlFor="genOverwriteCheckbox" className="text-xs font-bold text-white cursor-pointer">
+                    I confirm and want to overwrite existing days
+                  </label>
                 </div>
               </div>
+            )}
+          </DialogBody>
 
-              {sessions.length > 0 && (
-                <div className="rounded-xl border border-amber-500/40 bg-amber-950/30 p-3 space-y-2">
-                  <div className="flex items-center gap-2 text-xs font-bold text-amber-400">
-                    <AlertTriangle className="h-4 w-4" />
-                    <span>Warning: Existing Schedule Detected ({sessions.length} days)</span>
-                  </div>
-                  <p className="text-[11px] text-[#C5D5D8] leading-relaxed">
-                    Generating a new schedule will replace existing session rows. If students have already attended, regeneration is strictly blocked.
-                  </p>
-                  <div className="flex items-center gap-2 pt-1">
-                    <input
-                      type="checkbox"
-                      id="genOverwriteCheckbox"
-                      checked={genOverwrite}
-                      onChange={(e) => setGenOverwrite(e.target.checked)}
-                      className="h-4 w-4 rounded border-[#1A373E] bg-[#081619] text-amber-500 focus:ring-amber-500"
-                    />
-                    <label htmlFor="genOverwriteCheckbox" className="text-xs font-bold text-white cursor-pointer">
-                      I confirm and want to overwrite existing days
-                    </label>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <div className="mt-6 flex items-center justify-end gap-3">
-              <button
-                type="button"
-                onClick={() => {
-                  setShowGeneratorModal(false);
-                  setGenModalError(null);
-                }}
-                className="rounded-xl border border-[#1A373E] bg-[#0E2024] px-4 py-2 text-xs font-semibold text-white hover:bg-[#132A30]"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                onClick={handleGenerateSchedule}
-                disabled={generating || !selectedProgramId || (sessions.length > 0 && !genOverwrite)}
-                className="rounded-xl bg-amber-500 px-5 py-2 text-xs font-bold text-black hover:bg-amber-400 disabled:opacity-50 transition-all shadow"
-              >
-                {generating ? 'Generating Schedule...' : 'Generate Days'}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+          <DialogFooter>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                setShowGeneratorModal(false);
+                setGenModalError(null);
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="cta"
+              size="sm"
+              onClick={handleGenerateSchedule}
+              disabled={generating || !selectedProgramId || (sessions.length > 0 && !genOverwrite)}
+            >
+              {generating ? 'Generating Schedule...' : 'Generate Days'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {/* ===================================================================== */}
       {/* 2. Shift Schedule Modal */}
       {/* ===================================================================== */}
-      {showShiftModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-          <div className="w-full max-w-sm rounded-2xl border border-[#1A373E] bg-[#081619] p-6 text-white shadow-2xl">
-            <div className="flex items-center justify-between border-b border-[#1A373E] pb-3">
-              <div className="flex items-center gap-2">
-                <MoveRight className="h-5 w-5 text-amber-400" />
-                <h3 className="font-serif text-lg font-bold text-white">Shift Entire Schedule</h3>
-              </div>
-              <button
-                type="button"
-                onClick={() => setShowShiftModal(false)}
-                className="text-[#8D9FA4] hover:text-white"
-              >
-                <X className="h-5 w-5" />
-              </button>
+      <Dialog open={showShiftModal} onOpenChange={setShowShiftModal}>
+        <DialogContent size="sm">
+          <DialogHeader>
+            <div className="flex items-center gap-2">
+              <MoveRight className="h-5 w-5 text-amber-400" />
+              <DialogTitle>Shift Entire Schedule</DialogTitle>
             </div>
-
-            <p className="mt-3 text-xs text-[#8D9FA4] leading-relaxed">
+            <DialogDescription>
               Delay or advance all {sessions.length} days in this cohort challenge by N days.
-            </p>
+            </DialogDescription>
+          </DialogHeader>
 
-            <div className="mt-4 space-y-2">
+          <DialogBody className="space-y-4">
+            <div className="space-y-2">
               <label className="text-xs font-bold text-white block">Shift By Days</label>
               <div className="flex items-center gap-3">
                 <input
@@ -1193,43 +1194,51 @@ export const AdminSessionsPage: React.FC = () => {
                 Positive numbers move sessions into the future; negative numbers advance them earlier.
               </p>
             </div>
+          </DialogBody>
 
-            <div className="mt-6 flex items-center justify-end gap-3">
-              <button
-                type="button"
-                onClick={() => setShowShiftModal(false)}
-                className="rounded-xl border border-[#1A373E] bg-[#0E2024] px-4 py-2 text-xs font-semibold text-white hover:bg-[#132A30]"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                onClick={handleShiftSchedule}
-                disabled={shifting || shiftDays === 0}
-                className="rounded-xl bg-amber-500 px-5 py-2 text-xs font-bold text-black hover:bg-amber-400 disabled:opacity-50"
-              >
-                {shifting ? 'Shifting...' : 'Shift Schedule'}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+          <DialogFooter>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setShowShiftModal(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="cta"
+              size="sm"
+              onClick={handleShiftSchedule}
+              disabled={shifting || shiftDays === 0}
+            >
+              {shifting ? 'Shifting...' : 'Shift Schedule'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {/* ===================================================================== */}
       {/* 3. Session Editor Modal / Drawer */}
       {/* ===================================================================== */}
-      {(editingSession !== null || isNewSession) && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4 sm:p-6 overflow-y-auto">
-          <div className="w-full max-w-4xl rounded-2xl border border-[#234A54] bg-[#081619] p-6 text-white shadow-2xl my-auto space-y-6">
-            {/* Header */}
-            <div className="flex items-center justify-between border-b border-[#1A373E] pb-4">
+      <Dialog
+        open={editingSession !== null || isNewSession}
+        onOpenChange={(open) => {
+          if (!open) {
+            setEditingSession(null);
+            setIsNewSession(false);
+          }
+        }}
+      >
+        <DialogContent size="4xl">
+          {/* Header */}
+          <DialogHeader>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pr-6">
               <div>
                 <span className="text-[10px] font-bold text-amber-400 tracking-wider uppercase">
                   {isNewSession ? 'New Session' : `Editing Day ${formDayNumber}`}
                 </span>
-                <h3 className="font-serif text-2xl font-bold text-white">
+                <DialogTitle className="text-xl sm:text-2xl mt-0.5">
                   {formTitle || 'Untitled Day Session'}
-                </h3>
+                </DialogTitle>
               </div>
 
               {/* Form vs Student Preview Tabs */}
@@ -1258,19 +1267,11 @@ export const AdminSessionsPage: React.FC = () => {
                     Preview as Student
                   </button>
                 </div>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    setEditingSession(null);
-                    setIsNewSession(false);
-                  }}
-                  className="rounded-lg p-1.5 text-[#8D9FA4] hover:text-white"
-                >
-                  <X className="h-5 w-5" />
-                </button>
               </div>
             </div>
+          </DialogHeader>
+
+          <DialogBody className="space-y-6">
 
             {editorError && (
               <ErrorDetailsAlert
@@ -1535,30 +1536,31 @@ export const AdminSessionsPage: React.FC = () => {
               </div>
             )}
 
-            {/* Modal Actions */}
-            <div className="flex items-center justify-end gap-3 border-t border-[#1A373E] pt-4">
-              <button
-                type="button"
-                onClick={() => {
-                  setEditingSession(null);
-                  setIsNewSession(false);
-                }}
-                className="rounded-xl border border-[#1A373E] bg-[#0E2024] px-4 py-2 text-xs font-semibold text-white hover:bg-[#132A30]"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                onClick={handleSaveSession}
-                disabled={savingSession}
-                className="rounded-xl bg-amber-500 px-6 py-2 text-xs font-bold text-black hover:bg-amber-400 disabled:opacity-50 transition-all shadow"
-              >
-                {savingSession ? 'Saving Session...' : isNewSession ? 'Create Session' : 'Save Session Changes'}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+          </DialogBody>
+
+          {/* Modal Actions */}
+          <DialogFooter>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                setEditingSession(null);
+                setIsNewSession(false);
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="cta"
+              size="sm"
+              onClick={handleSaveSession}
+              disabled={savingSession}
+            >
+              {savingSession ? 'Saving Session...' : isNewSession ? 'Create Session' : 'Save Session Changes'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

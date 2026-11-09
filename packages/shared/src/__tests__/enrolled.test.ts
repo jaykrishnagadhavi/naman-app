@@ -3,7 +3,6 @@ import {
   fetchMyPrograms,
   fetchProgramEnrolled,
   requestSessionLiveLink,
-  requestSessionRecording,
   toggleTaskCompletion,
   registerPaymentInterest,
 } from '../enrolled';

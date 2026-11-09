@@ -2,6 +2,15 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from './AuthProvider';
 import { ShieldCheck, KeyRound, CheckCircle2, AlertCircle, RefreshCw, Copy, Check } from 'lucide-react';
 import { Button } from '../components/Button';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogBody,
+  DialogFooter,
+} from '../components/Dialog';
 
 export interface TotpEnrollmentManagerProps {
   onSuccess?: () => void;
@@ -343,52 +352,55 @@ export const TotpChallengeModal: React.FC<TotpChallengeModalProps> = ({ show, on
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4">
-      <div className="w-full max-w-sm rounded-2xl border border-[#1A373E] bg-[#081619] p-6 text-[#E1E8EA] shadow-2xl space-y-4">
-        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-400">
-          <KeyRound className="h-6 w-6" />
-        </div>
+    <Dialog open={true} onOpenChange={(open) => { if (!open) onCancel(); }}>
+      <DialogContent size="sm">
+        <form onSubmit={handleSubmit}>
+          <DialogHeader className="text-center sm:text-center pr-0">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-400">
+              <KeyRound className="h-6 w-6" />
+            </div>
+            <DialogTitle className="font-serif text-lg font-bold text-white mt-2">Two-Step Verification</DialogTitle>
+            <DialogDescription className="text-xs text-[var(--color-text-muted,#8D9FA4)]">
+              Enter the 6-digit code from your authenticator app to enter Naman Studio.
+            </DialogDescription>
+          </DialogHeader>
 
-        <div className="text-center space-y-1">
-          <h3 className="font-serif text-lg font-bold text-white">Two-Step Verification</h3>
-          <p className="text-xs text-[#8D9FA4]">
-            Enter the 6-digit code from your authenticator app to enter Naman Studio.
-          </p>
-        </div>
+          <DialogBody className="space-y-4">
+            <input
+              type="text"
+              inputMode="numeric"
+              autoFocus
+              maxLength={6}
+              placeholder="123456"
+              value={code}
+              onChange={(e) => setCode(e.target.value.replace(/\D/g, ''))}
+              className="w-full text-center tracking-[0.4em] font-mono text-xl font-bold rounded-lg border border-[var(--color-border,#1A373E)] bg-[var(--color-surface-2,#040C0E)] px-3 py-2.5 text-white focus:border-amber-500 focus:outline-none"
+            />
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            type="text"
-            inputMode="numeric"
-            autoFocus
-            maxLength={6}
-            placeholder="123456"
-            value={code}
-            onChange={(e) => setCode(e.target.value.replace(/\D/g, ''))}
-            className="w-full text-center tracking-[0.4em] font-mono text-xl font-bold rounded-lg border border-[#1A373E] bg-[#040C0E] px-3 py-2.5 text-white focus:border-amber-500 focus:outline-none"
-          />
+            {error && (
+              <p className="text-[11px] text-red-400 text-center flex items-center justify-center gap-1">
+                <AlertCircle className="h-3.5 w-3.5 shrink-0" />
+                <span>{error}</span>
+              </p>
+            )}
+          </DialogBody>
 
-          {error && (
-            <p className="text-[11px] text-red-400 text-center flex items-center justify-center gap-1">
-              <AlertCircle className="h-3.5 w-3.5 shrink-0" />
-              <span>{error}</span>
-            </p>
-          )}
-
-          <div className="space-y-2 pt-1">
+          <DialogFooter className="flex-col gap-2 sm:flex-col">
             <Button variant="primary" type="submit" disabled={verifying} className="w-full font-bold">
               {verifying ? 'Verifying Code...' : 'Verify & Continue'}
             </Button>
-            <button
+            <Button
               type="button"
+              variant="ghost"
+              size="sm"
               onClick={onCancel}
-              className="w-full text-xs text-[#8D9FA4] hover:text-white py-1"
+              className="w-full text-xs text-[#8D9FA4] hover:text-white"
             >
               Cancel & Sign Out
-            </button>
-          </div>
+            </Button>
+          </DialogFooter>
         </form>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 };

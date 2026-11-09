@@ -215,6 +215,16 @@ const AdminAppContent: React.FC = () => {
   const [isDark, setIsDark] = useState(true);
   const { user, profile, signOut, supabase } = useAuth();
 
+  useEffect(() => {
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
+    } else {
+      document.documentElement.classList.add('light');
+      document.documentElement.classList.remove('dark');
+    }
+  }, [isDark]);
+
   // Missing Link Warning Checker (Starts within 2 hours, no link) - Unconditional hooks
   const [upcomingWarningSession, setUpcomingWarningSession] = useState<{
     id: string;

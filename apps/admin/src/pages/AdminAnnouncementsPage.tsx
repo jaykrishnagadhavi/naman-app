@@ -27,6 +27,14 @@ import {
   AnnouncementBanner,
   AnnouncementInboxCard,
   ErrorDetailsAlert,
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogBody,
+  DialogFooter,
+  Button,
 } from '@abrainoconscious/ui';
 import {
   formatIST,
@@ -1382,45 +1390,49 @@ export const AdminAnnouncementsPage: React.FC = () => {
       )}
 
       {/* Urgent Confirmation Modal */}
-      {showUrgentModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-          <div className="w-full max-w-md rounded-2xl border border-red-500/50 bg-[#081619] p-6 text-white shadow-2xl">
+      <Dialog open={showUrgentModal} onOpenChange={setShowUrgentModal}>
+        <DialogContent size="md">
+          <DialogHeader>
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-red-500/20 text-red-400">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-red-500/20 text-red-400">
                 <AlertOctagon className="h-6 w-6 animate-pulse" />
               </div>
               <div>
-                <h3 className="font-serif text-lg font-bold text-white">Confirm Urgent Broadcast</h3>
-                <span className="text-xs text-red-400 font-semibold">Immediate High-Priority Dispatch</span>
+                <DialogTitle className="font-serif text-lg font-bold text-white">Confirm Urgent Broadcast</DialogTitle>
+                <DialogDescription className="text-xs text-red-400 font-semibold">Immediate High-Priority Dispatch</DialogDescription>
               </div>
             </div>
+          </DialogHeader>
 
-            <p className="mt-4 text-xs text-[#C5D5D8] leading-relaxed">
+          <DialogBody>
+            <p className="text-xs text-[var(--color-text-body,#C5D5D8)] leading-relaxed">
               This will show as a prominent, attention-grabbing banner to approximately{' '}
               <strong className="text-amber-400 font-mono">{urgentAudienceCount}</strong> student
               dashboards and immediately push notifications.
             </p>
+          </DialogBody>
 
-            <div className="mt-6 flex items-center justify-end gap-3">
-              <button
-                type="button"
-                onClick={() => setShowUrgentModal(false)}
-                className="rounded-xl border border-[#1A373E] bg-[#0E2024] px-4 py-2 text-xs font-semibold text-white hover:bg-[#132A30]"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                onClick={() => handleSaveAnnouncement(false)}
-                disabled={submitting}
-                className="rounded-xl bg-red-600 px-5 py-2 text-xs font-bold text-white hover:bg-red-500 shadow-lg shadow-red-600/30"
-              >
-                {submitting ? 'Publishing...' : 'Yes, Dispatch Urgent Banner'}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+          <DialogFooter>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => setShowUrgentModal(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="button"
+              size="sm"
+              onClick={() => handleSaveAnnouncement(false)}
+              disabled={submitting}
+              className="bg-red-600 hover:bg-red-500 text-white font-bold shadow-lg shadow-red-600/30"
+            >
+              {submitting ? 'Publishing...' : 'Yes, Dispatch Urgent Banner'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

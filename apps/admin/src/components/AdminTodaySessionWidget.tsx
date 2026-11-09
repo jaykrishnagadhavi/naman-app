@@ -14,7 +14,19 @@ import {
   Link as LinkIcon,
   X,
 } from 'lucide-react';
-import { useAuth, StudentSessionCard, ErrorDetailsAlert } from '@abrainoconscious/ui';
+import {
+  useAuth,
+  StudentSessionCard,
+  ErrorDetailsAlert,
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogBody,
+  DialogFooter,
+  Button,
+} from '@abrainoconscious/ui';
 import {
   formatIST,
   validateLiveUrl,
@@ -670,141 +682,133 @@ export const AdminTodaySessionWidget: React.FC<AdminTodaySessionWidgetProps> = (
       </div>
 
       {/* Re-Notify Confirmation Modal */}
-      {reNotifyPrompt && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-          <div className="w-full max-w-md rounded-2xl border border-amber-500/40 bg-[#081619] p-6 text-white shadow-2xl">
+      <Dialog open={reNotifyPrompt} onOpenChange={setReNotifyPrompt}>
+        <DialogContent size="md">
+          <DialogHeader>
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-500/20 text-amber-400">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-500/20 text-amber-400">
                 <AlertTriangle className="h-5 w-5" />
               </div>
               <div>
-                <h3 className="font-serif text-lg font-bold text-white">Live Link Modified</h3>
-                <p className="text-xs text-[#8D9FA4]">A live link has already been published for this session.</p>
+                <DialogTitle className="font-serif text-lg font-bold text-white">Live Link Modified</DialogTitle>
+                <DialogDescription className="text-xs text-[#8D9FA4]">A live link has already been published for this session.</DialogDescription>
               </div>
             </div>
+          </DialogHeader>
 
-            <p className="mt-4 text-xs text-[#C5D5D8] leading-relaxed">
+          <DialogBody>
+            <p className="text-xs text-[var(--color-text-body,#C5D5D8)] leading-relaxed">
               Do you want to re-notify all {activeSession.enrolled_count} active students with the new link, or update it silently in place?
             </p>
+          </DialogBody>
 
-            <div className="mt-6 flex items-center justify-end gap-3">
-              <button
-                type="button"
-                onClick={() => {
-                  setReNotifyPrompt(false);
-                  handlePublishLink(false); // update silently without spamming
-                }}
-                className="rounded-xl border border-[#1A373E] bg-[#0E2024] px-4 py-2 text-xs font-semibold text-white hover:bg-[#132A30]"
-              >
-                Update Silently
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setReNotifyPrompt(false);
-                  handlePublishLink(true); // force re-notify
-                }}
-                className="rounded-xl bg-amber-500 px-4 py-2 text-xs font-bold text-black hover:bg-amber-400"
-              >
-                Re-Notify All Students
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+          <DialogFooter>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                setReNotifyPrompt(false);
+                handlePublishLink(false); // update silently without spamming
+              }}
+            >
+              Update Silently
+            </Button>
+            <Button
+              type="button"
+              size="sm"
+              onClick={() => {
+                setReNotifyPrompt(false);
+                handlePublishLink(true); // force re-notify
+              }}
+              className="bg-amber-500 hover:bg-amber-400 text-black font-bold"
+            >
+              Re-Notify All Students
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {/* Recording URL Modal */}
-      {showRecordingModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-          <div className="w-full max-w-lg rounded-2xl border border-[#1A373E] bg-[#081619] p-6 text-white shadow-2xl">
-            <div className="flex items-center justify-between border-b border-[#1A373E]/60 pb-3">
-              <div className="flex items-center gap-2">
-                <Video className="h-5 w-5 text-amber-400" />
-                <h3 className="font-serif text-lg font-bold text-white">Session Recording URL</h3>
-              </div>
-              <button
-                type="button"
-                onClick={() => setShowRecordingModal(false)}
-                className="text-[#8D9FA4] hover:text-white"
-              >
-                <X className="h-5 w-5" />
-              </button>
+      <Dialog open={showRecordingModal} onOpenChange={setShowRecordingModal}>
+        <DialogContent size="lg">
+          <DialogHeader>
+            <div className="flex items-center gap-2">
+              <Video className="h-5 w-5 text-amber-400" />
+              <DialogTitle className="font-serif text-lg font-bold text-white">Session Recording URL</DialogTitle>
+            </div>
+            <DialogDescription className="text-xs text-[#8D9FA4]">
+              Add or update the secure recording link for Day {activeSession.day_number}.
+            </DialogDescription>
+          </DialogHeader>
+
+          <DialogBody className="space-y-4">
+            <div>
+              <label className="text-xs font-bold text-white block mb-1">
+                Recording URL (HTTPS)
+              </label>
+              <input
+                type="url"
+                value={recordingInput}
+                onChange={(e) => setRecordingInput(e.target.value)}
+                placeholder="https://..."
+                className="w-full rounded-xl border border-[var(--color-border,#1A373E)] bg-[var(--color-surface-2,#051113)] px-4 py-2.5 font-mono text-xs text-white placeholder-[#8D9FA4] focus:border-amber-500 focus:outline-none"
+              />
             </div>
 
-            <div className="mt-4 space-y-4">
-              <div>
-                <label className="text-xs font-bold text-white block mb-1">
-                  Recording URL (HTTPS)
-                </label>
-                <input
-                  type="url"
-                  value={recordingInput}
-                  onChange={(e) => setRecordingInput(e.target.value)}
-                  placeholder="https://..."
-                  className="w-full rounded-xl border border-[#1A373E] bg-[#051113] px-4 py-2.5 font-mono text-xs text-white placeholder-[#8D9FA4] focus:border-amber-500 focus:outline-none"
-                />
-              </div>
-
-              <div className="flex items-center gap-3 rounded-xl border border-[#1A373E] bg-[#051113] p-3">
-                <input
-                  type="checkbox"
-                  id="recordingVisibleToggle"
-                  checked={recordingVisible}
-                  onChange={(e) => setRecordingVisible(e.target.checked)}
-                  className="h-4 w-4 rounded border-[#1A373E] bg-[#081619] text-amber-500 focus:ring-amber-500"
-                />
-                <label htmlFor="recordingVisibleToggle" className="cursor-pointer text-xs text-[#A0B1B5]">
-                  <span className="font-semibold text-white">Make recording visible to enrolled students now</span>
-                  <span className="block text-[11px] text-[#8D9FA4]">
-                    If unchecked, recording remains private until you review and enable it.
-                  </span>
-                </label>
-              </div>
+            <div className="flex items-center gap-3 rounded-xl border border-[var(--color-border,#1A373E)] bg-[var(--color-surface-2,#051113)] p-3">
+              <input
+                type="checkbox"
+                id="recordingVisibleToggle"
+                checked={recordingVisible}
+                onChange={(e) => setRecordingVisible(e.target.checked)}
+                className="h-4 w-4 rounded border-[#1A373E] bg-[#081619] text-amber-500 focus:ring-amber-500"
+              />
+              <label htmlFor="recordingVisibleToggle" className="cursor-pointer text-xs text-[#A0B1B5]">
+                <span className="font-semibold text-white">Make recording visible to enrolled students now</span>
+                <span className="block text-[11px] text-[#8D9FA4]">
+                  If unchecked, recording remains private until you review and enable it.
+                </span>
+              </label>
             </div>
+          </DialogBody>
 
-            <div className="mt-6 flex items-center justify-end gap-3">
-              <button
-                type="button"
-                onClick={() => setShowRecordingModal(false)}
-                className="rounded-xl border border-[#1A373E] bg-[#0E2024] px-4 py-2 text-xs font-semibold text-white hover:bg-[#132A30]"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                onClick={handleSaveRecording}
-                disabled={savingRecording}
-                className="rounded-xl bg-amber-500 px-5 py-2 text-xs font-bold text-black hover:bg-amber-400 disabled:opacity-50"
-              >
-                {savingRecording ? 'Saving...' : 'Save Recording'}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+          <DialogFooter>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => setShowRecordingModal(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="button"
+              size="sm"
+              onClick={handleSaveRecording}
+              disabled={savingRecording}
+              className="bg-amber-500 hover:bg-amber-400 text-black font-bold disabled:opacity-50"
+            >
+              {savingRecording ? 'Saving...' : 'Save Recording'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {/* Student View Live Preview Modal */}
-      {showStudentPreview && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4 sm:p-6 overflow-y-auto">
-          <div className="w-full max-w-3xl rounded-2xl border border-amber-500/40 bg-[#040C0E] p-6 text-white shadow-2xl space-y-4 my-auto">
-            <div className="flex items-center justify-between border-b border-[#1A373E] pb-3">
-              <div className="flex items-center gap-2">
-                <Eye className="h-5 w-5 text-amber-400" />
-                <h3 className="font-serif text-lg font-bold text-white">Student Dashboard Preview</h3>
-              </div>
-              <button
-                type="button"
-                onClick={() => setShowStudentPreview(false)}
-                className="text-[#8D9FA4] hover:text-white"
-              >
-                <X className="h-5 w-5" />
-              </button>
+      <Dialog open={showStudentPreview} onOpenChange={setShowStudentPreview}>
+        <DialogContent size="4xl">
+          <DialogHeader>
+            <div className="flex items-center gap-2">
+              <Eye className="h-5 w-5 text-amber-400" />
+              <DialogTitle className="font-serif text-lg font-bold text-white">Student Dashboard Preview</DialogTitle>
             </div>
-
-            <p className="text-xs text-[#8D9FA4]">
+            <DialogDescription className="text-xs text-[#8D9FA4]">
               This is the exact component rendered inside the student portal (<code className="text-amber-400 font-mono">app.abrainoconcious.com</code>) using real database data and draft status.
-            </p>
+            </DialogDescription>
+          </DialogHeader>
 
+          <DialogBody className="space-y-4">
             <StudentSessionCard
               dayNumber={activeSession.day_number}
               title={activeSession.title}
@@ -820,19 +824,20 @@ export const AdminTodaySessionWidget: React.FC<AdminTodaySessionWidgetProps> = (
               recordingVisible={activeSession.recording_visible}
               isPreview={true}
             />
+          </DialogBody>
 
-            <div className="flex justify-end pt-2">
-              <button
-                type="button"
-                onClick={() => setShowStudentPreview(false)}
-                className="rounded-xl bg-[#152B30] hover:bg-[#1E3B42] px-5 py-2 text-xs font-semibold text-white"
-              >
-                Close Preview
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+          <DialogFooter>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => setShowStudentPreview(false)}
+            >
+              Close Preview
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
