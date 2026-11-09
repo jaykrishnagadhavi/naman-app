@@ -95,9 +95,10 @@ pnpm build
 
 ---
 
-## 4. Environment Variables
+## 4. Environment Variables & Database Administration
 
-Each app includes a `.env.example` file:
+### Client Environment Variables
+Each app includes an `.env.example` file for client-side configuration:
 ```env
 VITE_SUPABASE_URL=https://placeholder-project.supabase.co
 VITE_SUPABASE_ANON_KEY=placeholder-anon-key
@@ -106,4 +107,24 @@ VITE_RAZORPAY_KEY_ID=rzp_test_placeholder
 VITE_VIDEO_DOMAIN=video.abrainoconcious.com
 ```
 A typed Zod loader (`packages/shared/src/env.ts`) validates environment variables upon startup with clear errors if required keys are missing.
+
+### Root Environment Variables (Database & Admin Seeding)
+The repository root includes a `.env.example` template for backend tasks and administrative scripts:
+```env
+SUPABASE_URL=http://127.0.0.1:54321
+SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-role-key
+ADMIN_EMAILS=admin@abrainoconcious.com,creator@abrainoconcious.com
+```
+
+### Seeding Administrator Accounts
+To seed or promote administrator accounts defined in `ADMIN_EMAILS`:
+```bash
+# Local development:
+pnpm seed:admin
+
+# Remote linked Supabase project (requires safety confirmation):
+pnpm seed:admin -- --yes
+```
+Safety checks refuse execution if `SUPABASE_URL` does not match the linked Supabase CLI project, and require the `--yes` confirmation flag before executing against remote databases.
+
 

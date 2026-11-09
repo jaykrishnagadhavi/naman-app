@@ -36,3 +36,12 @@ export function loadClientEnv(rawEnv?: Record<string, unknown>): ClientEnv {
   return parsed.data;
 }
 
+export function isDev(): boolean {
+  if (typeof import.meta !== 'undefined' && 'env' in import.meta) {
+    const env = (import.meta as unknown as { env?: { DEV?: boolean; MODE?: string } }).env;
+    return Boolean(env?.DEV || env?.MODE === 'development');
+  }
+  return typeof process !== 'undefined' && process.env?.NODE_ENV !== 'production';
+}
+
+

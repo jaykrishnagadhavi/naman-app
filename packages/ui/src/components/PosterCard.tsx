@@ -9,6 +9,7 @@ export interface PosterCardProps {
   title: string;
   category?: string;
   coverImage?: string;
+  coverSrcset?: Record<string, string> | null;
   imageId?: string;
   aspectRatio?: '2:3' | '16:9';
   rankNumber?: number; // 1-10 for Trending rail variant
@@ -25,6 +26,7 @@ export const PosterCard: React.FC<PosterCardProps> = ({
   title,
   category,
   coverImage,
+  coverSrcset,
   imageId,
   aspectRatio = '2:3',
   rankNumber,
@@ -53,6 +55,7 @@ export const PosterCard: React.FC<PosterCardProps> = ({
           <Img
             id={imageId}
             src={coverImage}
+            srcsetMap={coverSrcset}
             alt={title}
             aspectRatio={isPoster ? '2/3' : '16/9'}
             fallbackTitle={title}

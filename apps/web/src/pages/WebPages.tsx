@@ -1,275 +1,32 @@
-import React, { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import {
-  HeroBanner, ContentRail, PosterCard, CategoryChips,
-  SearchBar, BadgeTile, Button
-} from '@abrainoconscious/ui';
+import React from 'react';
+import { useParams } from 'react-router-dom';
+import { Button, BadgeTile } from '@abrainoconscious/ui';
 import { CRISIS_HELPLINES } from '@abrainoconscious/shared';
 import {
-  Radio, Play, CheckCircle2,
-  PhoneCall, Clock, Lock
+  Play,
+  PhoneCall,
 } from 'lucide-react';
 
 // 1. Student Home Page
-export const HomePage: React.FC = () => {
-  const navigate = useNavigate();
-
-  return (
-    <div className="space-y-10">
-      {/* Dynamic Hero Banner */}
-      <HeroBanner
-        variant="live-now"
-        title="Live Challenge Day 4: Emotional Regulation Before Heavy Study Sprints"
-        subtitle="Naman is live on Zoom right now breaking down the 90-second cognitive grounding protocol."
-        programTitle="21-Day Mindset Reset"
-        onAction={() => alert('Launching today’s live Zoom session link (attendance verified)...')}
-      />
-
-      {/* Pinned Announcement */}
-      <div className="rounded-xl border border-amber-500/40 bg-gradient-to-r from-amber-500/10 via-[#0E2024] to-[#081619] p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div className="flex items-center gap-3">
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-amber-500 text-black font-bold text-xs">
-            📢
-          </span>
-          <div>
-            <h4 className="text-xs font-bold text-white">New Daily Task Published</h4>
-            <p className="text-[11px] text-[#8D9FA4]">Day 4 active workbook is ready in your enrolled programs.</p>
-          </div>
-        </div>
-        <Button size="sm" variant="primary" onClick={() => navigate('/my-programs')}>
-          Open Daily Task &rarr;
-        </Button>
-      </div>
-
-      {/* Continue Learning Row */}
-      <ContentRail title="Continue Learning" subtitle="Pick up right where you left off">
-        <PosterCard
-          id="c1"
-          title="The 21-Day Mindset & Focus Challenge"
-          category="Mental & Academic"
-          aspectRatio="16:9"
-          lessonCount={21}
-          progressPercent={45}
-          onSelect={() => navigate('/programs/21-day-mindset/learn')}
-        />
-        <PosterCard
-          id="c2"
-          title="Emotional De-escalation Under Pressure"
-          category="Emotional"
-          aspectRatio="16:9"
-          lessonCount={12}
-          progressPercent={80}
-          onSelect={() => navigate('/courses/emotional-deescalation/watch/lesson-3')}
-        />
-      </ContentRail>
-
-      {/* Trending Challenges */}
-      <ContentRail title="Trending Cohorts" subtitle="Live programs starting soon">
-        <PosterCard
-          id="t1"
-          title="Deep Work & Exam Mastery Protocol"
-          category="Academic"
-          aspectRatio="2:3"
-          rankNumber={1}
-          lessonCount={18}
-          pricePaise={129900}
-          onSelect={() => navigate('/programs/deep-work-exam-mastery')}
-        />
-        <PosterCard
-          id="t2"
-          title="Habit Architecture for Busy Students"
-          category="Personal"
-          aspectRatio="2:3"
-          rankNumber={2}
-          lessonCount={14}
-          pricePaise={89900}
-          onSelect={() => navigate('/programs/habit-architecture')}
-        />
-        <PosterCard
-          id="t3"
-          title="Social Anxiety & Confident Speech"
-          category="Emotional"
-          aspectRatio="2:3"
-          rankNumber={3}
-          lessonCount={16}
-          pricePaise={99900}
-          onSelect={() => navigate('/programs/confident-speech')}
-        />
-      </ContentRail>
-    </div>
-  );
-};
+export { HomePage } from './HomePage';
 
 // 2. Explore Library Page
-export const ExplorePage: React.FC = () => {
-  const [selectedPillar, setSelectedPillar] = useState('all');
-  const [search, setSearch] = useState('');
-  const navigate = useNavigate();
-
-  return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="font-serif text-3xl font-bold text-[#F8FAFA]">Explore Programs</h1>
-        <p className="text-xs text-[#8D9FA4] mt-1">Browse live cohorts and video courses across the four pillars.</p>
-      </div>
-
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <CategoryChips selectedCategory={selectedPillar} onSelectCategory={setSelectedPillar} />
-        <SearchBar value={search} onChange={setSearch} />
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        <PosterCard
-          id="exp-1"
-          title="21-Day Mind & Focus Reset"
-          category="Mental"
-          aspectRatio="2:3"
-          lessonCount={21}
-          pricePaise={99900}
-          onSelect={() => navigate('/programs/21-day-mindset')}
-        />
-        <PosterCard
-          id="exp-2"
-          title="Exam Pressure Protocol"
-          category="Academic"
-          aspectRatio="2:3"
-          lessonCount={18}
-          pricePaise={129900}
-          onSelect={() => navigate('/programs/exam-pressure')}
-        />
-        <PosterCard
-          id="exp-3"
-          title="Emotional Grounding in 90 Seconds"
-          category="Emotional"
-          aspectRatio="2:3"
-          lessonCount={12}
-          pricePaise={79900}
-          onSelect={() => navigate('/programs/emotional-grounding')}
-        />
-        <PosterCard
-          id="exp-4"
-          title="Habit Stacking Architecture"
-          category="Personal"
-          aspectRatio="2:3"
-          lessonCount={14}
-          pricePaise={89900}
-          onSelect={() => navigate('/programs/habit-stacking')}
-        />
-      </div>
-    </div>
-  );
-};
+export { ExplorePage } from './ExplorePage';
 
 // 3. Program Preview Page
-export const ProgramPreviewPage: React.FC = () => {
-  const { slug } = useParams();
-  const navigate = useNavigate();
+export { ProgramPage, ProgramPage as ProgramPreviewPage } from './ProgramPage';
 
-  return (
-    <div className="max-w-4xl mx-auto space-y-8">
-      <div className="space-y-3">
-        <span className="rounded-full bg-amber-500/15 px-3 py-1 text-xs font-semibold text-amber-400 border border-amber-500/30 uppercase">
-          Live 21-Day Challenge
-        </span>
-        <h1 className="font-serif text-3xl sm:text-5xl font-bold text-white">
-          The 21-Day Mind & Focus Challenge
-        </h1>
-        <p className="text-sm text-[#8D9FA4] leading-relaxed">
-          Daily live morning calls with Naman, structured workbook assignments, and accountability across emotional, mental, academic, and personal growth.
-        </p>
-      </div>
-
-      <div className="rounded-2xl border border-[#1A373E] bg-[#0E2024] p-6 space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#1A373E] pb-4">
-          <div>
-            <span className="text-xs text-[#8D9FA4]">One-Time Enrollment</span>
-            <div className="font-serif text-3xl font-bold text-white">₹999</div>
-          </div>
-          <Button size="lg" variant="cta" onClick={() => navigate('/signup?program=' + slug)}>
-            JOIN THIS CHALLENGE &rarr;
-          </Button>
-        </div>
-
-        <div className="space-y-4">
-          <h3 className="font-serif text-lg font-bold text-white">What You Will Learn</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-[#E1E8EA]">
-            <div className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-amber-500" /> Active study retention protocols</div>
-            <div className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-amber-500" /> Breaking out of catastrophic mental loops</div>
-            <div className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-amber-500" /> Daily habit execution without willpower</div>
-            <div className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-amber-500" /> Live interactive Q&A sessions with Naman</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
+// 3b. Checkout Summary Page
+export { CheckoutPage } from './CheckoutPage';
 
 // 4. Enrolled Student Journey Page
-export const ProgramLearnPage: React.FC = () => {
-  const { slug } = useParams();
+export { ProgramPage as ProgramLearnPage } from './ProgramPage';
 
-  return (
-    <div className="max-w-4xl mx-auto space-y-8">
-      <div>
-        <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider">Enrolled Cohort ({slug})</span>
-        <h1 className="font-serif text-3xl font-bold text-white mt-1">21-Day Mindset Reset Dashboard</h1>
-        <p className="text-xs text-[#8D9FA4]">Day 4 of 21 • Your daily growth checklist</p>
-      </div>
+// 4b. My Programs Dashboard Page
+export { MyProgramsPage } from './MyProgramsPage';
 
-      {/* Today's Live Link Card */}
-      <div className="rounded-2xl border border-red-500/40 bg-gradient-to-r from-[#180A0E] via-[#0E151A] to-[#081619] p-6 space-y-4 shadow-xl">
-        <div className="flex items-center justify-between">
-          <span className="flex items-center gap-2 text-xs font-bold text-red-400">
-            <Radio className="h-4 w-4 animate-pulse" /> TODAY'S LIVE CALL IS LIVE
-          </span>
-          <span className="text-xs text-[#8D9FA4]">Starts at 8:00 PM IST</span>
-        </div>
-        <div>
-          <h3 className="font-serif text-xl font-bold text-white">Day 4: Taming the Inner Critic</h3>
-          <p className="text-xs text-[#8D9FA4] mt-1">Join Naman for today’s live breakdown and doubt clearing.</p>
-        </div>
-        <Button size="lg" className="bg-red-600 hover:bg-red-500 text-white font-bold" onClick={() => alert('Launching Zoom meeting...')}>
-          <Radio className="h-4 w-4 mr-2" /> JOIN LIVE ZOOM NOW
-        </Button>
-      </div>
-
-      {/* Four-Step Journey Checklist */}
-      <div className="rounded-2xl border border-[#1A373E] bg-[#0E2024] p-6 space-y-4">
-        <h3 className="font-serif text-lg font-bold text-white">Today's Journey Checklist</h3>
-        <div className="space-y-3">
-          <div className="flex items-center justify-between p-3 rounded-lg bg-[#081619] border border-[#1A373E]">
-            <div className="flex items-center gap-3">
-              <CheckCircle2 className="h-5 w-5 text-emerald-400" />
-              <span className="text-xs font-medium text-white">1. Watch Day 4 Core Lesson (14 Mins)</span>
-            </div>
-            <span className="text-[11px] text-emerald-400 font-semibold">Done</span>
-          </div>
-          <div className="flex items-center justify-between p-3 rounded-lg bg-[#081619] border border-[#1A373E]">
-            <div className="flex items-center gap-3">
-              <Clock className="h-5 w-5 text-amber-500" />
-              <span className="text-xs font-medium text-white">2. Complete Today’s 15-Min Worksheet</span>
-            </div>
-            <Button size="sm" variant="primary">Start Task</Button>
-          </div>
-          <div className="flex items-center justify-between p-3 rounded-lg bg-[#081619] border border-[#1A373E]">
-            <div className="flex items-center gap-3">
-              <Radio className="h-5 w-5 text-red-400" />
-              <span className="text-xs font-medium text-white">3. Attend Today’s Live Session</span>
-            </div>
-            <span className="text-[11px] text-red-400 font-semibold">Live Now</span>
-          </div>
-          <div className="flex items-center justify-between p-3 rounded-lg bg-[#081619] border border-[#1A373E]">
-            <div className="flex items-center gap-3">
-              <Lock className="h-5 w-5 text-[#8D9FA4]" />
-              <span className="text-xs font-medium text-[#8D9FA4]">4. Post in Community Reflection</span>
-            </div>
-            <span className="text-[11px] text-[#8D9FA4]">Locked</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
+// 4c. Inbox and Realtime Announcements Page
+export { InboxPage } from './InboxPage';
 
 // 5. Protected Player Watch Page
 export const CourseWatchPage: React.FC = () => {
@@ -366,36 +123,6 @@ export const CrisisSupportPage: React.FC = () => {
     </div>
   );
 };
-
-// 7. Skeletons for Other Student Pages
-export const MyProgramsPage: React.FC = () => (
-  <div className="space-y-6">
-    <h1 className="font-serif text-3xl font-bold text-white">My Enrolled Programs</h1>
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-      <PosterCard
-        id="my-1"
-        title="21-Day Mind & Focus Reset"
-        category="Mental"
-        aspectRatio="2:3"
-        lessonCount={21}
-        progressPercent={45}
-      />
-    </div>
-  </div>
-);
-
-export const InboxPage: React.FC = () => (
-  <div className="space-y-6 max-w-3xl mx-auto">
-    <h1 className="font-serif text-3xl font-bold text-white">Naman's Announcements</h1>
-    <div className="space-y-3">
-      <div className="p-4 rounded-xl border border-[#1A373E] bg-[#0E2024]">
-        <h4 className="text-sm font-bold text-white">Welcome to Week 1!</h4>
-        <p className="text-xs text-[#8D9FA4] mt-1">Make sure you have downloaded the Day 1 grounding worksheet.</p>
-        <span className="text-[10px] text-amber-500 mt-2 block">2 days ago</span>
-      </div>
-    </div>
-  </div>
-);
 
 export const CommunityPage: React.FC = () => (
   <div className="space-y-6 max-w-3xl mx-auto">

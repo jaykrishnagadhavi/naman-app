@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { cn } from '@abrainoconscious/shared';
+import { cn, buildSrcSetString } from '@abrainoconscious/shared';
 import { IMAGES_INDEX, type ImageManifestEntry } from '../generated-images';
 
 export interface ImgProps extends React.ImgHTMLAttributes<HTMLImageElement> {
@@ -12,6 +12,7 @@ export interface ImgProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   sizes?: string;
   fallbackTitle?: string;
   containerClassName?: string;
+  srcsetMap?: Record<string, string> | null;
 }
 
 export const Img: React.FC<ImgProps> = ({
@@ -25,6 +26,8 @@ export const Img: React.FC<ImgProps> = ({
   fallbackTitle,
   className,
   containerClassName,
+  srcsetMap,
+  srcSet,
   style,
   ...props
 }) => {
@@ -45,20 +48,21 @@ export const Img: React.FC<ImgProps> = ({
     ? { aspectRatio: resolvedAspectRatio }
     : { aspectRatio: '16/9' };
 
-  // Calculate srcsets if renditions exist
+  // Calculate srcsets if renditions exist or srcsetMap is provided
   const avifRenditions = entry?.renditions.filter(r => r.format === 'avif') || [];
   const webpRenditions = entry?.renditions.filter(r => r.format === 'webp') || [];
 
+  const dynamicSrcSet = srcSet || buildSrcSetString(srcsetMap);
   const avifSrcSet = avifRenditions.map(r => `${r.src} ${r.width}w`).join(', ');
-  const webpSrcSet = webpRenditions.map(r => `${r.src} ${r.width}w`).join(', ');
+  const webpSrcSet = dynamicSrcSet || webpRenditions.map(r => `${r.src} ${r.width}w`).join(', ');
 
   const defaultSrc = src || (webpRenditions.length > 0 ? webpRenditions[webpRenditions.length - 1].src : '');
 
-  // Reset states if src/id changes
+  // Reset states if src/id/srcsetMap changes
   useEffect(() => {
     setIsLoaded(false);
     setHasError(false);
-  }, [src, id]);
+  }, [src, id, srcsetMap]);
 
   if (hasError || (!defaultSrc && !entry)) {
     // Elegant gradient fallback as required by spec section 2 & 11

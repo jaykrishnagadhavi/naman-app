@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   Button, Table, TableHeader, TableBody, TableRow, TableHead, TableCell,
-  Badge, ImageUploader
+  Badge, ImageUploader, TotpEnrollmentManager
 } from '@abrainoconscious/ui';
 import {
   Plus, Radio
@@ -287,9 +287,14 @@ export const AdminTeamPage: React.FC = () => (
 );
 
 export const AdminSettingsPage: React.FC = () => (
-  <div className="space-y-4">
-    <h1 className="font-serif text-2xl font-bold text-white">Platform Settings</h1>
-    <p className="text-xs text-[#8D9FA4]">Brand logo, GST details, support WhatsApp, maintenance mode, and Razorpay test mode toggle.</p>
+  <div className="space-y-8 max-w-4xl">
+    <div>
+      <h1 className="font-serif text-2xl font-bold text-white">Platform Settings & Security</h1>
+      <p className="text-xs text-[#8D9FA4]">Brand logo, GST details, support WhatsApp, maintenance mode, and authentication security.</p>
+    </div>
+
+    {/* TOTP MFA Enrollment */}
+    <TotpEnrollmentManager />
   </div>
 );
 

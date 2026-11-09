@@ -95,7 +95,7 @@ One Supabase project serves all apps. Generate TypeScript types from the schema.
 
 **Students (app):** email and password with email verification, forgot and reset password, magic link, Google OAuth through Supabase. A database trigger creates the `profiles` row. Onboarding collects name, phone (needed for Razorpay and contact) and a short 'what do you want to work on' choice.
 
-**Admin:** separate login. Access only if `profiles.role` is `admin` or `staff`; anyone else sees access-denied and is signed out. Roles: `admin` (Naman, full access), `staff` (content and announcements, no payments, refunds, settings or roles), `student`. The first admin is set by a seed script from env `ADMIN_EMAIL`. Role changes only through an Edge Function that checks the caller is admin. Optional TOTP 2FA, session timeout, login rate limiting.
+**Admin:** separate login. Access only if `profiles.role` is `admin` or `staff`; anyone else sees access-denied and is signed out. Roles: `admin` (Naman, full access), `staff` (content and announcements, no payments, refunds, settings or roles), `student`. The initial admins are set by a seed script from env `ADMIN_EMAILS` (with fallback to `ADMIN_EMAIL`). Role changes only through an Edge Function that checks the caller is admin. Optional TOTP 2FA, session timeout, login rate limiting.
 
 The apps live on separate subdomains, so each handles its own session. Configure redirect URLs for local, Vercel previews and production.
 
@@ -105,7 +105,12 @@ UUID keys, `created_at` and `updated_at` triggers, enums for statuses, soft dele
 
 **People and access:** `profiles` (id = auth.users.id, full\_name, phone, avatar\_url, role, goal\_tag, is\_blocked, last\_seen\_at), `enrollments` (user\_id, program\_id, status `active | refunded | revoked`, payment\_id, enrolled\_at, access\_until, source `paid | manual | coupon_free`, unique(user\_id, program\_id))
 
-**Catalogue:** `programs` (type `challenge | course`, title, slug, short\_description, description, cover\_image\_url, poster\_image\_url, promo\_video\_url, price\_paise, compare\_at\_price\_paise, status `draft | published | live | completed | archived`, starts\_at, ends\_at, enrollment\_deadline, max\_seats, is\_featured, is\_trending\_pinned, sort\_order, category, tags, what\_you\_will\_learn jsonb, faq jsonb, deleted\_at), `program_sessions` (program\_id, day\_number, title, description, scheduled\_at, live\_url, live\_platform `zoom | meet | youtube | other`, recording\_url, status `scheduled | live | ended`, task\_title, task\_body, resources jsonb), `course_sections`, `lessons`, `bundles`, `bundle_items` (see section 11 for video fields)
+**Catalogue:** `programs` (type `challenge | course`, title, slug, short\_description, description, cover\_image\_url, poster\_image\_url, promo\_video\_url, price\_paise, compare\_at\_price\_paise, status `draft | published | live | completed | archived`, starts\_at, ends\_at, enrollment\_deadline, max\_seats, is\_featured, is\_trending\_pinned, sort\_order, category, tags, what\_you\_will\_learn jsonb, faq jsonb, deleted\_at), `program_sessions` (program\_id, day\_number, title, description, scheduled\_at, live\_platform `zoom | meet | youtube | other`, status `scheduled | live | ended`, task\_title, task\_body, resources jsonb), `course_sections`, `lessons`, `bundles`, `bundle_items` (see section 11 for video fields).
+
+**Protected Links by Design:** To prevent accidental leaks via public queries or caching, secret links and video references are isolated into dedicated protected tables:
+- `session_links` (session\_id unique, live\_url, recording\_url)
+- `lesson_media` (lesson\_id unique, video\_id, content\_url, attachments jsonb, subtitles jsonb)
+Public tables `program_sessions` and `lessons` hold only non-secret metadata. RLS on `session_links` and `lesson_media` strictly requires an active enrollment (or free-preview for lessons, or admin/staff).
 
 **Catalogue images:** `programs` has three admin-uploaded images: `thumbnail_url` (16:9 card image), `poster_image_url` (2:3 poster for rails and Trending) and `cover_image_url` (wide hero banner), each with an `*_alt` text column. `lessons`, `course_sections` and `bundles` also have an optional `thumbnail_url`. Images live in a Supabase Storage bucket `program-images` (public read, admin and staff write only, enforced by RLS).
 

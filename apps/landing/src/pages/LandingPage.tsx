@@ -21,7 +21,7 @@ import {
   Button,
   Img
 } from '@abrainoconscious/ui';
-import { PILLARS, type GrowthPillar } from '@abrainoconscious/shared';
+import { PILLARS, type GrowthPillar, getAppUrl } from '@abrainoconscious/shared';
 import {
   ShieldCheck, Sparkles, CheckCircle2, ArrowRight, Video, Calendar,
   Smartphone, Award, MessageSquare, HeartHandshake, Brain, GraduationCap
@@ -45,11 +45,11 @@ export const LandingPage: React.FC = () => {
   }, []);
 
   const handleJoin = () => {
-    window.location.href = 'http://localhost:5173/signup?program=21-day-mindset';
+    window.location.href = getAppUrl('/signup?program=21-day-mindset');
   };
 
   const handleLogin = () => {
-    window.location.href = 'http://localhost:5173/login';
+    window.location.href = getAppUrl('/login');
   };
 
   const getPillarIcon = (pillar: GrowthPillar) => {

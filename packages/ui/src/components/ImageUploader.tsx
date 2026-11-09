@@ -1,64 +1,91 @@
-import React, { useState, useRef, useCallback } from 'react';
-import { cn } from '@abrainoconscious/shared';
-import { Upload, X, ZoomIn, ZoomOut, CheckCircle2, AlertCircle, Eye, RefreshCw } from 'lucide-react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
+import {
+  cn,
+  validateImageFile,
+  processAndUploadProgramImage,
+  type ProgramImageKind,
+  type TypedSupabaseClient
+} from '@abrainoconscious/shared';
+import { Upload, X, ZoomIn, ZoomOut, CheckCircle2, AlertCircle, Eye, RefreshCw, Loader2 } from 'lucide-react';
 
 export type AspectRatioType = '16:9' | '2:3' | 'wide-hero';
 
 export interface ImageUploaderProps {
   initialRatio?: AspectRatioType;
   initialAlt?: string;
+  currentImageUrl?: string | null;
+  currentSrcset?: Record<string, string> | null;
+  programId?: string;
+  kind?: ProgramImageKind;
+  supabase?: TypedSupabaseClient;
   onSave?: (data: { file: File | null; alt: string; ratio: AspectRatioType; zoom: number; position: { x: number; y: number } }) => void;
+  onUploadSuccess?: (data: {
+    primaryUrl: string;
+    srcset: Record<string, string>;
+    alt: string;
+    uploadedPaths: string[];
+  }) => void;
+  onRemove?: () => void;
+  onAltChange?: (alt: string) => void;
+  ratioLocked?: boolean;
   className?: string;
 }
 
 export const ImageUploader: React.FC<ImageUploaderProps> = ({
   initialRatio = '16:9',
   initialAlt = '',
+  currentImageUrl = null,
+  currentSrcset: _currentSrcset = null,
+  programId,
+  kind = 'thumbnail',
+  supabase,
   onSave,
+  onUploadSuccess,
+  onRemove,
+  onAltChange,
+  ratioLocked = false,
   className
 }) => {
   const [file, setFile] = useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(currentImageUrl);
   const [altText, setAltText] = useState(initialAlt);
   const [ratio, setRatio] = useState<AspectRatioType>(initialRatio);
   const [zoom, setZoom] = useState(1);
   const [position, setPosition] = useState({ x: 50, y: 50 });
   const [error, setError] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState<number | null>(null);
   const [activePreviewTab, setActivePreviewTab] = useState<'rail' | 'trending' | 'landing' | 'mobile'>('rail');
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const validateAndSetFile = (selectedFile: File) => {
-    setError(null);
-    const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
-    if (!validTypes.includes(selectedFile.type)) {
-      setError('Invalid file format. Please upload JPG, PNG, or WebP.');
-      return;
+  // Sync external preview URL if changed
+  useEffect(() => {
+    if (currentImageUrl && !file) {
+      setPreviewUrl(currentImageUrl);
     }
-    if (selectedFile.size > 10 * 1024 * 1024) {
-      setError('File size exceeds the 10 MB limit.');
+  }, [currentImageUrl, file]);
+
+  useEffect(() => {
+    if (initialAlt) {
+      setAltText(initialAlt);
+    }
+  }, [initialAlt]);
+
+  const validateAndSetFile = async (selectedFile: File) => {
+    setError(null);
+
+    // Verify real file type by reading magic bytes & size limit (10MB)
+    const validation = await validateImageFile(selectedFile);
+    if (!validation.valid) {
+      setError(validation.error || 'Invalid file. Please select a valid JPEG, PNG, or WebP image under 10 MB.');
       return;
     }
 
     setFile(selectedFile);
-    const url = URL.createObjectURL(selectedFile);
-    setPreviewUrl(url);
-
-    // Simulate upload progress
-    setUploadProgress(0);
-    let prog = 0;
-    const interval = setInterval(() => {
-      prog += 25;
-      if (prog >= 100) {
-        clearInterval(interval);
-        setUploadProgress(100);
-        setTimeout(() => setUploadProgress(null), 800);
-      } else {
-        setUploadProgress(prog);
-      }
-    }, 150);
+    const objectUrl = URL.createObjectURL(selectedFile);
+    setPreviewUrl(objectUrl);
   };
 
   const handleDrop = useCallback((e: React.DragEvent) => {
@@ -79,7 +106,9 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
   }, []);
 
   const handleRemove = () => {
-    if (previewUrl) URL.revokeObjectURL(previewUrl);
+    if (previewUrl && previewUrl.startsWith('blob:')) {
+      URL.revokeObjectURL(previewUrl);
+    }
     setFile(null);
     setPreviewUrl(null);
     setAltText('');
@@ -87,6 +116,52 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
     setPosition({ x: 50, y: 50 });
     setError(null);
     if (fileInputRef.current) fileInputRef.current.value = '';
+    onRemove?.();
+  };
+
+  const handlePerformUpload = async () => {
+    if (!file) {
+      onSave?.({ file: null, alt: altText, ratio, zoom, position });
+      return;
+    }
+
+    if (!supabase || !programId) {
+      // Offline / standalone fallback
+      onSave?.({ file, alt: altText, ratio, zoom, position });
+      return;
+    }
+
+    setIsUploading(true);
+    setError(null);
+    setUploadProgress(10);
+
+    try {
+      const result = await processAndUploadProgramImage({
+        supabase,
+        programId,
+        kind,
+        file,
+        crop: { zoom, position },
+        onProgress: (p) => setUploadProgress(p),
+      });
+
+      setUploadProgress(100);
+      onUploadSuccess?.({
+        primaryUrl: result.primaryUrl,
+        srcset: result.srcset,
+        alt: altText,
+        uploadedPaths: result.uploadedPaths,
+      });
+
+      // Keep preview pointing to the uploaded primary URL
+      setPreviewUrl(result.primaryUrl);
+      setFile(null);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : String(err));
+    } finally {
+      setIsUploading(false);
+      setTimeout(() => setUploadProgress(null), 1000);
+    }
   };
 
   const getAspectClass = (r: AspectRatioType) => {
@@ -106,19 +181,23 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
         </div>
         {/* Ratio Selector */}
         <div className="flex items-center rounded-lg bg-[#0E2024] p-1 border border-[#1A373E]">
-          {(['16:9', '2:3', 'wide-hero'] as AspectRatioType[]).map((r) => (
-            <button
-              key={r}
-              type="button"
-              onClick={() => setRatio(r)}
-              className={cn(
-                'rounded px-3 py-1 text-xs font-medium transition-colors',
-                ratio === r ? 'bg-amber-500 text-black font-semibold shadow' : 'text-[#8D9FA4] hover:text-white'
-              )}
-            >
-              {r === '16:9' ? '16:9 Thumbnail' : r === '2:3' ? '2:3 Poster' : 'Wide Banner'}
-            </button>
-          ))}
+          {(['16:9', '2:3', 'wide-hero'] as AspectRatioType[])
+            .filter((r) => (!ratioLocked ? true : r === ratio))
+            .map((r) => (
+              <button
+                key={r}
+                type="button"
+                disabled={ratioLocked}
+                onClick={() => setRatio(r)}
+                className={cn(
+                  'rounded px-3 py-1 text-xs font-medium transition-colors',
+                  ratio === r ? 'bg-amber-500 text-black font-semibold shadow' : 'text-[#8D9FA4] hover:text-white',
+                  ratioLocked && 'cursor-default'
+                )}
+              >
+                {r === '16:9' ? '16:9 Thumbnail' : r === '2:3' ? '2:3 Poster' : 'Wide Banner'}
+              </button>
+            ))}
         </div>
       </div>
 
@@ -251,7 +330,10 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
             <input
               type="text"
               value={altText}
-              onChange={(e) => setAltText(e.target.value)}
+              onChange={(e) => {
+                setAltText(e.target.value);
+                onAltChange?.(e.target.value);
+              }}
               placeholder="e.g. Naman teaching on glassboard with live challenge details"
               className="w-full rounded-lg border border-[#1A373E] bg-[#040C0E] px-3 py-2 text-sm text-white placeholder-[#8D9FA4]/60 focus:border-amber-500 focus:outline-none"
             />
@@ -388,14 +470,31 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
           </div>
 
           <div className="flex items-center justify-between pt-2">
-            <span className="text-xs text-[#8D9FA4]">Changes previewed in real-time</span>
+            <span className="text-xs text-[#8D9FA4]">
+              {file ? 'Unsaved crop & file' : currentImageUrl ? 'WebP asset active' : 'No asset chosen'}
+            </span>
             <button
               type="button"
-              onClick={() => onSave?.({ file, alt: altText, ratio, zoom, position })}
-              disabled={!file}
+              onClick={handlePerformUpload}
+              disabled={isUploading || (!file && !currentImageUrl)}
               className="flex items-center gap-1.5 rounded-lg bg-amber-500 px-4 py-2 text-xs font-semibold text-black hover:bg-amber-400 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
             >
-              <CheckCircle2 className="h-3.5 w-3.5" /> Save Asset
+              {isUploading ? (
+                <>
+                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                  <span>Processing WebP ({uploadProgress || 0}%)...</span>
+                </>
+              ) : file ? (
+                <>
+                  <CheckCircle2 className="h-3.5 w-3.5" />
+                  <span>Process & Upload WebP</span>
+                </>
+              ) : (
+                <>
+                  <CheckCircle2 className="h-3.5 w-3.5" />
+                  <span>Asset Active</span>
+                </>
+              )}
             </button>
           </div>
         </div>

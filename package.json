@@ -8,16 +8,29 @@
     "build": "pnpm --recursive run build",
     "lint": "eslint .",
     "typecheck": "pnpm --recursive run typecheck",
-    "images": "node scripts/optimize-images.cjs"
+    "images": "node scripts/optimize-images.cjs",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "db:start": "supabase start",
+    "db:stop": "supabase stop",
+    "db:reset": "supabase db reset",
+    "db:test": "supabase test db",
+    "db:types": "supabase gen types typescript --local > packages/shared/src/database.types.ts",
+    "db:push": "supabase db push",
+    "db:lint": "supabase db lint",
+    "seed:admin": "node scripts/seed-admin.cjs"
   },
   "devDependencies": {
+    "@playwright/test": "^1.64.1",
+    "@supabase/supabase-js": "^2.118.0",
     "@types/node": "^22.10.2",
     "concurrently": "^9.1.0",
     "eslint": "^9.17.0",
     "prettier": "^3.4.2",
     "puppeteer-core": "^23.11.1",
     "sharp": "^0.33.5",
-    "typescript": "^5.7.2"
+    "supabase": "^2.122.0",
+    "typescript": "^5.7.2",
+    "vitest": "^5.1.0"
   }
 }
-

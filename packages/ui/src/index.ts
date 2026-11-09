@@ -23,8 +23,17 @@ export * from './components/ModuleAndCreator';
 export * from './components/CardsAndAccordion';
 export * from './components/Img';
 export * from './components/ImageUploader';
+export * from './components/RichTextEditor';
+export * from './components/ComingSoonPlaceholder';
+export * from './components/StudentSessionCard';
+export * from './components/AnnouncementBanner';
+export * from './components/AnnouncementInboxCard';
+export * from './components/MissingLinkBanner';
+export * from './components/ErrorDetailsAlert';
 export * from './pages/DesignSystemPage';
 export * from './layouts/Layouts';
 export * from './generated-images';
+export * from './auth';
+export { CATEGORY_LABELS, type PillarCategory } from '@abrainoconscious/shared';
 export { abrainoPreset } from './tailwind-preset';
 

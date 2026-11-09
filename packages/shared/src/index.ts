@@ -1,4 +1,22 @@
 export * from './types';
+export * from './database.types';
+export * from './schemas';
+export * from './supabase';
 export * from './env';
 export * from './utils';
+export * from './urls';
+export * from './redirects';
+export * from './errors';
+export * from './image-pipeline';
+export * from './catalog';
+export * from './enrolled';
 
+import type { Database } from './database.types';
+export type ProgramRow = Database['public']['Tables']['programs']['Row'];
+export type ProgramInsert = Database['public']['Tables']['programs']['Insert'];
+export type ProgramUpdate = Database['public']['Tables']['programs']['Update'];
+export type ProgramSessionRow = Database['public']['Tables']['program_sessions']['Row'];
+export type SessionLinkRow = Database['public']['Tables']['session_links']['Row'];
+export type AnnouncementRow = Database['public']['Tables']['announcements']['Row'];
+export type NotificationRow = Database['public']['Tables']['notifications']['Row'];
+export type AuditLogRow = Database['public']['Tables']['audit_log']['Row'];
