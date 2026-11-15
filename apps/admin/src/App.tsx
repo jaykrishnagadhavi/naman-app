@@ -20,6 +20,12 @@ import { AdminProgramEditorPage } from './pages/AdminProgramEditorPage';
 import { AdminSessionsPage } from './pages/AdminSessionsPage';
 import { AdminAnnouncementsPage } from './pages/AdminAnnouncementsPage';
 import { AdminStudentsPage } from './pages/AdminStudentsPage';
+import { AdminCouponsPage } from './pages/AdminCouponsPage';
+import { AdminPaymentsPage } from './pages/AdminPaymentsPage';
+import { AdminReviewsPage } from './pages/AdminReviewsPage';
+import { AdminAttendancePage } from './pages/AdminAttendancePage';
+import { AdminTeamPage } from './pages/AdminTeamPage';
+import { AdminSettingsPage } from './pages/AdminSettingsPage';
 import { AdminAuditLogPage } from './pages/AdminAuditLogPage';
 import { AdminLoginPage } from './pages/auth/AdminLoginPage';
 import { AdminForgotPasswordPage } from './pages/auth/AdminForgotPasswordPage';
@@ -466,27 +472,27 @@ const AdminAppContent: React.FC = () => {
               }
             />
             <Route
+              path="/attendance"
+              element={
+                <PageErrorBoundary pageName="Attendance & Engagement">
+                  <AdminAttendancePage />
+                </PageErrorBoundary>
+              }
+            />
+            <Route
               path="/payments"
               element={
-                <ComingSoonPlaceholder
-                  stepNumber={6}
-                  stepName="Payments & Checkout"
-                  title="Razorpay Transactions & Invoices"
-                  description="Payment capture history, order logs, GST invoicing, and refunds ledger will be available in Step 6."
-                  onNavigateToPrograms={() => navigate('/programs')}
-                />
+                <PageErrorBoundary pageName="Orders & Payments">
+                  <AdminPaymentsPage />
+                </PageErrorBoundary>
               }
             />
             <Route
               path="/coupons"
               element={
-                <ComingSoonPlaceholder
-                  stepNumber={6}
-                  stepName="Discount Engine"
-                  title="Coupon Codes & Promotions"
-                  description="Promotional discount creation, percentage and flat discounts, and usage caps will be available in Step 6."
-                  onNavigateToPrograms={() => navigate('/programs')}
-                />
+                <PageErrorBoundary pageName="Discount Coupons">
+                  <AdminCouponsPage />
+                </PageErrorBoundary>
               }
             />
             <Route
@@ -516,37 +522,25 @@ const AdminAppContent: React.FC = () => {
             <Route
               path="/reviews"
               element={
-                <ComingSoonPlaceholder
-                  stepNumber={8}
-                  stepName="Reviews & Wall of Love"
-                  title="Testimonials & Reviews"
-                  description="Student review submissions, rating approvals, and public testimonial curation will be available in Step 8."
-                  onNavigateToPrograms={() => navigate('/programs')}
-                />
+                <PageErrorBoundary pageName="Reviews Moderation">
+                  <AdminReviewsPage />
+                </PageErrorBoundary>
               }
             />
             <Route
               path="/team"
               element={
-                <ComingSoonPlaceholder
-                  stepNumber={9}
-                  stepName="Team & RBAC"
-                  title="Team Management"
-                  description="Staff invites, role assignment, and administrative permissions will be available in Step 9."
-                  onNavigateToPrograms={() => navigate('/programs')}
-                />
+                <PageErrorBoundary pageName="Team Management">
+                  <AdminTeamPage />
+                </PageErrorBoundary>
               }
             />
             <Route
               path="/settings"
               element={
-                <ComingSoonPlaceholder
-                  stepNumber={9}
-                  stepName="Platform Settings"
-                  title="Platform & Brand Settings"
-                  description="Brand identity, support contact emails, legal policies, and maintenance mode toggles will be available in Step 9."
-                  onNavigateToPrograms={() => navigate('/programs')}
-                />
+                <PageErrorBoundary pageName="Platform Settings">
+                  <AdminSettingsPage />
+                </PageErrorBoundary>
               }
             />
             <Route

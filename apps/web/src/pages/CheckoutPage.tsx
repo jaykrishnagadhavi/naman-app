@@ -231,8 +231,15 @@ export const CheckoutPage: React.FC = () => {
                 className="mt-1 h-4 w-4 rounded border-[#1A373E] bg-[#040C0E] text-amber-500 focus:ring-0"
               />
               <label htmlFor="terms-check" className="text-xs text-[#8D9FA4] leading-relaxed cursor-pointer select-none">
-                I agree to the <strong className="text-white">Terms of Enrollment & Anti-Piracy Policy</strong>. All
-                live sessions, worksheets, and course materials are for my personal educational use only. Screen
+                I agree to the{' '}
+                <a href="/terms" target="_blank" rel="noreferrer" className="text-amber-400 underline font-semibold">
+                  Terms of Service
+                </a>{' '}
+                and{' '}
+                <a href="/refund-policy" target="_blank" rel="noreferrer" className="text-amber-400 underline font-semibold">
+                  Refund Policy
+                </a>
+                . All live sessions, worksheets, and course materials are for my personal educational use only. Screen
                 recording, link sharing, or re-uploading content is strictly prohibited.
               </label>
             </div>

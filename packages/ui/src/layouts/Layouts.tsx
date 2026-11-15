@@ -157,9 +157,10 @@ export const LandingLayout: React.FC<LandingLayoutProps> = ({
               <h5 className="font-semibold text-white uppercase tracking-wider text-[11px]">Platform & Legal</h5>
               <ul className="space-y-1.5">
                 <li><a href="/login" className="hover:text-white">Student Portal</a></li>
-                <li><a href="#faq" className="hover:text-white">Refund Policy (7 Days)</a></li>
-                <li><a href="#faq" className="hover:text-white">Terms of Service</a></li>
-                <li><a href="#faq" className="hover:text-white">Privacy Policy</a></li>
+                <li><a href="/refund-policy" className="hover:text-white">Refund Policy</a></li>
+                <li><a href="/terms" className="hover:text-white">Terms of Service</a></li>
+                <li><a href="/privacy" className="hover:text-white">Privacy Policy</a></li>
+                <li><a href="/support" className="hover:text-white">Crisis Support & Helplines</a></li>
               </ul>
             </div>
           </div>
@@ -543,6 +544,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
         { label: 'Courses', path: '/courses', icon: Video },
         { label: 'Announcements', path: '/announcements', icon: MessageSquare },
         { label: 'Students', path: '/students', icon: Users },
+        { label: 'Attendance', path: '/attendance', icon: FileText },
         { label: 'Payments', path: '/payments', icon: CreditCard, restrictedToAdmin: true },
         { label: 'Coupons', path: '/coupons', icon: Tag, restrictedToAdmin: true },
       ],

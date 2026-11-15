@@ -391,6 +391,85 @@ Programs in `draft`, `archived`, or `completed` states may have null images/pric
    - `get_unread_counts()`: Fast aggregation of unread announcements and notifications.
    - `mark_announcement_read(id)`, `mark_notification_read(id)`, `mark_all_read()`: State transition helpers.
 
+---
+
+## 11. Step 9 Schema Additions: Administrative Business Screens & Security Definer RPCs (`20261114000001_admin_business_and_security.sql`)
+
+### Schema Alterations
+1. **`profiles`**:
+   - Added `blocked_reason TEXT` and `blocked_at TIMESTAMPTZ` for student account suspension and moderation tracking.
+
+2. **`account_deletion_requests`**:
+   - Added `admin_note TEXT` and `processed_by UUID REFERENCES profiles(id)` for tracking administrative resolution and processing status.
+
+3. **`reviews`**:
+   - Added `status TEXT NOT NULL DEFAULT 'approved' CHECK (status IN ('pending', 'approved', 'hidden'))`.
+   - Trigger `trg_sync_review_published_status` keeps `is_published` synced to `(status = 'approved')`.
+
+4. **`site_settings`**:
+   - Added Brand fields: `logo_url`, `favicon_url`, `social_links` (JSONB), `channel_subscriber_count`.
+   - Added Business fields: `gst_enabled`, `gst_rate_percent`, `invoice_details` (JSONB), `currency_display`.
+   - Added Legal text fields: `terms_html`, `privacy_html`, `refund_policy_html`, `medical_disclaimer_html`, `legal_last_updated`.
+   - Added Support helplines: `support_helplines` (JSONB array with default India Tele-MANAS 14416).
+   - Added Sessions settings: `allowed_live_link_hosts` (TEXT[]), `live_link_join_window_before_minutes`, `live_link_join_window_after_minutes`, `default_daily_session_time`.
+   - Added Security: `idle_timeout_minutes` (default 30).
+
+5. **`coupons`**:
+   - Trigger `trg_normalize_coupon_code` normalizes coupon codes to `UPPER(TRIM(code))` and rejects empty codes.
+
+### Student Account Lockout Enforcement
+- `assert_user_not_blocked(p_user_id)` helper function:
+  - Verifies `profiles.is_blocked = false`.
+  - If true, raises exception `ACCOUNT_BLOCKED: Your account has been paused. Please contact support.` (error code `P0001`).
+  - Integrated directly into all student RPCs: `enroll_free`, `get_my_programs`, `get_program_enrolled`, `get_session_link`, `get_session_recording`, `complete_task`, `register_payment_interest`.
+
+### Administrative Security Definer RPCs
+1. **`admin_list_students(search, filters..., sort, limit, offset)`**:
+   - `SECURITY DEFINER`, `SET search_path = public, auth`.
+   - Accessible only to `admin` and `staff` roles.
+   - Returns server-paginated students list with enrolled programs, contact information (email, phone), goal tags, blocked status, and total count.
+
+2. **`admin_get_student(p_user_id)`**:
+   - `SECURITY DEFINER`, `SET search_path = public, auth`.
+   - Accessible to `admin` and `staff`.
+   - Returns full student profile, enrollments, attendance history, task completions, and deletion request status.
+
+3. **`admin_set_blocked(p_user_id, p_blocked, p_reason)`**:
+   - `SECURITY DEFINER`, `SET search_path = public`.
+   - Accessible ONLY to `admin` role. Staff callers strictly rejected.
+   - Prevents self-blocking. Updates profile and logs audit event in `audit_log`.
+
+4. **`admin_list_orders(filters, search, limit, offset)` & `admin_revenue_stats(range)`**:
+   - `SECURITY DEFINER`, `SET search_path = public, auth`.
+   - Accessible ONLY to `admin` role. Staff callers strictly rejected.
+   - Returns real zero stats and empty order logs while payment gateway is on hold.
+
+5. **`admin_attendance_report(p_program_id, p_session_id)`**:
+   - `SECURITY DEFINER`, `SET search_path = public, auth`.
+   - Accessible to `admin` and `staff`.
+   - Generates per-session and per-student attendance and task completion rates with low-engagement indicators.
+
+6. **`admin_dashboard_stats(p_range)`**:
+   - `SECURITY DEFINER`, `SET search_path = public, auth`.
+   - Accessible to `admin` and `staff`.
+   - Aggregates signups, enrolments velocity, program counts by status, sessions today, missing live links within 2 hours, payment interest demand per program, and operational attention queues.
+
+7. **`handle_deletion_request(p_request_id, p_status, p_note)`**:
+   - `SECURITY DEFINER`, `SET search_path = public`.
+   - Accessible ONLY to `admin` role. Updates request status and logs audit event.
+
+8. **`validate_coupon(p_code, p_program_id, p_user_id)`**:
+   - `SECURITY DEFINER`, `SET search_path = public`.
+   - Validates code, program match, date validity, max redemptions, and user limits.
+   - Returns discount calculation and discounted price.
+
+9. **`admin_list_reviews`, `admin_moderate_review`, `admin_delete_review`**:
+   - Review moderation queue and lifecycle actions with role boundaries (delete requires admin).
+
+10. **`admin_update_site_settings(p_settings)` & `get_public_site_settings()`**:
+    - Administrative configuration management and public configuration retrieval for brand, legal texts, helplines, and maintenance mode gating.
+
+
 
 
 

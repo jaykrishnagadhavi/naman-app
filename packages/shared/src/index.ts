@@ -10,6 +10,7 @@ export * from './errors';
 export * from './image-pipeline';
 export * from './catalog';
 export * from './enrolled';
+export * from './admin-business';
 
 import type { Database } from './database.types';
 export type ProgramRow = Database['public']['Tables']['programs']['Row'];

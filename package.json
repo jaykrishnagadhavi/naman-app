@@ -18,7 +18,9 @@
     "db:types": "supabase gen types typescript --local > packages/shared/src/database.types.ts",
     "db:push": "supabase db push",
     "db:lint": "supabase db lint",
-    "seed:admin": "node scripts/seed-admin.cjs"
+    "seed:admin": "node scripts/seed-admin.cjs",
+    "fn:serve": "supabase functions serve",
+    "fn:deploy": "supabase functions deploy manage-team"
   },
   "devDependencies": {
     "@playwright/test": "^1.64.1",

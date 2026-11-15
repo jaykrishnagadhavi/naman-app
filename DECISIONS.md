@@ -263,6 +263,49 @@ Following `docs/design-research/`, the UI combines the strengths of Peterson Aca
   - Manual enrollment modal allowing staff to enroll any student profile in any program with custom expiry dates and instant welcome notifications (`admin_enroll` RPC).
   - Access revocation dialog with optional administrative reason (`admin_revoke_enrollment` RPC).
 
+---
+
+## Step 9: Admin Business Screens, RBAC, Promotions Engine, Platform Settings & Security Layer (2026-11-14)
+
+- **SECURITY DEFINER Administrative Procedures with Explicit `search_path` Isolation:**
+  - Implemented 14 administrative database RPCs: `admin_list_students`, `admin_get_student`, `admin_set_blocked`, `admin_list_orders`, `admin_revenue_stats`, `admin_attendance_report`, `admin_dashboard_stats`, `handle_deletion_request`, `validate_coupon`, `admin_list_reviews`, `admin_moderate_review`, `admin_delete_review`, `admin_update_site_settings`, `get_public_site_settings`.
+  - Every procedure explicitly defines `SET search_path = public` to prevent malicious search path hijacking.
+  - Role verification guards (`is_admin()` or `is_staff_or_admin()`) are enforced at the very beginning of each function block, rejecting unprivileged callers with `403 Forbidden` or `insufficient_privilege`.
+
+- **Student Account Suspension & Session Termination (`assert_user_not_blocked`):**
+  - Created reusable security assertion helper `assert_user_not_blocked(p_user_id)` and hooked it directly into all student-facing RPCs (`get_session_link`, `complete_task`, `submit_review`).
+  - When an administrator blocks a student profile (`profiles.is_blocked = true` with mandatory reason), all student session requests immediately reject with `403 Forbidden: User account has been suspended`.
+  - Student web application detects suspension state and switches to a calm, dignified "Account Paused" holding screen providing support referral links.
+
+- **Deno Edge Function Team Administration (`manage-team`):**
+  - Created standalone microservice with JWT authentication (`supabase/functions/manage-team/index.ts`).
+  - Enforces three critical security invariants:
+    1. *Last Administrator Lock:* Rejects any demotion or deletion that would leave the platform with 0 active administrators.
+    2. *Self-Demotion Lock:* Prevents active administrators from demoting or removing their own active credentials.
+    3. *Automatic Audit Logging:* Logs every team modification (`add_member`, `change_role`, `remove_member`) directly into `audit_logs` with before/after state diffs.
+  - Revoking team privileges drops the user back to standard student role without destroying their profile data.
+
+- **Promotional Engine & Real-Time Coupon Simulator:**
+  - Database-level validation triggers enforce uppercase coupon codes and uniqueness.
+  - Client and RPC discount calculations (`calculateCouponDiscount`, `validate_coupon`) strictly support both percentage (1% to 100%) and flat amount discounts (in paise), verifying program applicability, minimum spend thresholds, and expiry timestamps in Indian Standard Time (IST).
+  - Implemented an interactive "Test This Coupon Simulator" modal in Naman Studio, allowing administrators to preview exact checkout calculations before circulating codes on public channels.
+
+- **Formula Injection Defense in Tabular CSV Exports:**
+  - Implemented `escapeCsvCell()` in shared utilities.
+  - Prefixes any cell starting with formula trigger tokens (`=`, `+`, `-`, `@`, `\t`) with an apostrophe (`'`), preventing remote code execution (RCE) and data exfiltration vulnerabilities when CSV exports are opened in spreadsheet applications.
+
+- **Strict Boundary: Payments On-Hold Architecture:**
+  - Complied strictly with project constraints deferring Razorpay payment processing.
+  - Financial overview cards display real ₹0 values with transparent "Payments coming soon" badges.
+  - Action buttons (Refund, Invoicing, Gateway Reconciliation) are permanently disabled with explicit contextual explanations.
+  - Activated "Student Payment Interest" demand panels across Overview and Payments pages, capturing pre-launch customer demand per cohort.
+
+- **Platform Settings & Public Legal Document Synchronization:**
+  - Singleton `site_settings` table stores brand assets, invoicing configuration, legal documents (Terms of Service, Privacy Policy, Refund Policy), medical disclaimers, and whitelisted live-link hosts (`zoom.us`, `meet.google.com`, `youtube.com`, `youtu.be`).
+  - Student application dynamically serves `/terms`, `/privacy`, `/refund-policy`, and `/support` using live data fetched via `get_public_site_settings()`, falling back to compliant static legal text if the database is unpopulated.
+  - Platform Maintenance Mode toggle gracefully halts student application access with a calm branded notice while preserving uninterrupted administrative control room access.
+
+
 
 
 

@@ -25,14 +25,14 @@ export type Database = {
           Tables: {
             "account_deletion_requests": {
                   Row: {
-                    "created_at": string,"id": string,"reason": string | null,"status": string,"updated_at": string,"user_id": string
+                    "admin_note": string | null,"created_at": string,"id": string,"processed_by": string | null,"reason": string | null,"status": string,"updated_at": string,"user_id": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "created_at"?: string,"id"?: string,"reason"?: string | null,"status"?: string,"updated_at"?: string,"user_id": string
+                    "admin_note"?: string | null,"created_at"?: string,"id"?: string,"processed_by"?: string | null,"reason"?: string | null,"status"?: string,"updated_at"?: string,"user_id": string
                   }
                   Update: {
-                    "created_at"?: string,"id"?: string,"reason"?: string | null,"status"?: string,"updated_at"?: string,"user_id"?: string
+                    "admin_note"?: string | null,"created_at"?: string,"id"?: string,"processed_by"?: string | null,"reason"?: string | null,"status"?: string,"updated_at"?: string,"user_id"?: string
                   }
                   Relationships: [
                     {
@@ -607,14 +607,14 @@ isOneToOne: false
                   ]
                 },"profiles": {
                   Row: {
-                    "avatar_url": string | null,"created_at": string,"full_name": string | null,"goal_pillars": (string)[] | null,"goal_tag": string | null,"id": string,"is_blocked": boolean,"last_seen_at": string | null,"onboarding_completed_at": string | null,"phone": string | null,"referral_source": string | null,"role": Database["public"]['Enums']["user_role"],"terms_accepted_at": string | null,"updated_at": string
+                    "avatar_url": string | null,"blocked_at": string | null,"blocked_reason": string | null,"created_at": string,"full_name": string | null,"goal_pillars": (string)[] | null,"goal_tag": string | null,"id": string,"is_blocked": boolean,"last_seen_at": string | null,"onboarding_completed_at": string | null,"phone": string | null,"referral_source": string | null,"role": Database["public"]['Enums']["user_role"],"terms_accepted_at": string | null,"updated_at": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "avatar_url"?: string | null,"created_at"?: string,"full_name"?: string | null,"goal_pillars"?: (string)[] | null,"goal_tag"?: string | null,"id": string,"is_blocked"?: boolean,"last_seen_at"?: string | null,"onboarding_completed_at"?: string | null,"phone"?: string | null,"referral_source"?: string | null,"role"?: Database["public"]['Enums']["user_role"],"terms_accepted_at"?: string | null,"updated_at"?: string
+                    "avatar_url"?: string | null,"blocked_at"?: string | null,"blocked_reason"?: string | null,"created_at"?: string,"full_name"?: string | null,"goal_pillars"?: (string)[] | null,"goal_tag"?: string | null,"id": string,"is_blocked"?: boolean,"last_seen_at"?: string | null,"onboarding_completed_at"?: string | null,"phone"?: string | null,"referral_source"?: string | null,"role"?: Database["public"]['Enums']["user_role"],"terms_accepted_at"?: string | null,"updated_at"?: string
                   }
                   Update: {
-                    "avatar_url"?: string | null,"created_at"?: string,"full_name"?: string | null,"goal_pillars"?: (string)[] | null,"goal_tag"?: string | null,"id"?: string,"is_blocked"?: boolean,"last_seen_at"?: string | null,"onboarding_completed_at"?: string | null,"phone"?: string | null,"referral_source"?: string | null,"role"?: Database["public"]['Enums']["user_role"],"terms_accepted_at"?: string | null,"updated_at"?: string
+                    "avatar_url"?: string | null,"blocked_at"?: string | null,"blocked_reason"?: string | null,"created_at"?: string,"full_name"?: string | null,"goal_pillars"?: (string)[] | null,"goal_tag"?: string | null,"id"?: string,"is_blocked"?: boolean,"last_seen_at"?: string | null,"onboarding_completed_at"?: string | null,"phone"?: string | null,"referral_source"?: string | null,"role"?: Database["public"]['Enums']["user_role"],"terms_accepted_at"?: string | null,"updated_at"?: string
                   }
                   Relationships: [
                     
@@ -727,14 +727,14 @@ isOneToOne: false
                   ]
                 },"reviews": {
                   Row: {
-                    "body": string,"created_at": string,"id": string,"is_published": boolean,"program_id": string,"rating": number,"title": string | null,"updated_at": string,"user_id": string
+                    "body": string,"created_at": string,"id": string,"is_published": boolean,"program_id": string,"rating": number,"status": "pending" | "approved" | "hidden","title": string | null,"updated_at": string,"user_id": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "body": string,"created_at"?: string,"id"?: string,"is_published"?: boolean,"program_id": string,"rating": number,"title"?: string | null,"updated_at"?: string,"user_id": string
+                    "body": string,"created_at"?: string,"id"?: string,"is_published"?: boolean,"program_id": string,"rating": number,"status"?: "pending" | "approved" | "hidden","title"?: string | null,"updated_at"?: string,"user_id": string
                   }
                   Update: {
-                    "body"?: string,"created_at"?: string,"id"?: string,"is_published"?: boolean,"program_id"?: string,"rating"?: number,"title"?: string | null,"updated_at"?: string,"user_id"?: string
+                    "body"?: string,"created_at"?: string,"id"?: string,"is_published"?: boolean,"program_id"?: string,"rating"?: number,"status"?: "pending" | "approved" | "hidden","title"?: string | null,"updated_at"?: string,"user_id"?: string
                   }
                   Relationships: [
                     {
@@ -819,14 +819,14 @@ isOneToOne: false
                   ]
                 },"site_settings": {
                   Row: {
-                    "brand_name": string,"created_at": string,"gst_number": string | null,"id": boolean,"legal_text": string | null,"maintenance_mode": boolean,"razorpay_mode": string,"support_email": string,"support_whatsapp": string | null,"updated_at": string
+                    "allowed_live_link_hosts": string[],"brand_name": string,"channel_subscriber_count": number,"created_at": string,"currency_display": string,"default_daily_session_time": string,"favicon_url": string | null,"gst_enabled": boolean,"gst_number": string | null,"gst_rate_percent": number,"id": boolean,"idle_timeout_minutes": number,"invoice_details": Json,"legal_last_updated": string,"legal_text": string | null,"live_link_join_window_after_minutes": number,"live_link_join_window_before_minutes": number,"logo_url": string | null,"maintenance_mode": boolean,"medical_disclaimer_html": string,"privacy_html": string,"razorpay_mode": string,"refund_policy_html": string,"social_links": Json,"support_email": string,"support_helplines": Json,"support_whatsapp": string | null,"terms_html": string,"updated_at": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "brand_name"?: string,"created_at"?: string,"gst_number"?: string | null,"id"?: boolean,"legal_text"?: string | null,"maintenance_mode"?: boolean,"razorpay_mode"?: string,"support_email"?: string,"support_whatsapp"?: string | null,"updated_at"?: string
+                    "allowed_live_link_hosts"?: string[],"brand_name"?: string,"channel_subscriber_count"?: number,"created_at"?: string,"currency_display"?: string,"default_daily_session_time"?: string,"favicon_url"?: string | null,"gst_enabled"?: boolean,"gst_number"?: string | null,"gst_rate_percent"?: number,"id"?: boolean,"idle_timeout_minutes"?: number,"invoice_details"?: Json,"legal_last_updated"?: string,"legal_text"?: string | null,"live_link_join_window_after_minutes"?: number,"live_link_join_window_before_minutes"?: number,"logo_url"?: string | null,"maintenance_mode"?: boolean,"medical_disclaimer_html"?: string,"privacy_html"?: string,"razorpay_mode"?: string,"refund_policy_html"?: string,"social_links"?: Json,"support_email"?: string,"support_helplines"?: Json,"support_whatsapp"?: string | null,"terms_html"?: string,"updated_at"?: string
                   }
                   Update: {
-                    "brand_name"?: string,"created_at"?: string,"gst_number"?: string | null,"id"?: boolean,"legal_text"?: string | null,"maintenance_mode"?: boolean,"razorpay_mode"?: string,"support_email"?: string,"support_whatsapp"?: string | null,"updated_at"?: string
+                    "allowed_live_link_hosts"?: string[],"brand_name"?: string,"channel_subscriber_count"?: number,"created_at"?: string,"currency_display"?: string,"default_daily_session_time"?: string,"favicon_url"?: string | null,"gst_enabled"?: boolean,"gst_number"?: string | null,"gst_rate_percent"?: number,"id"?: boolean,"idle_timeout_minutes"?: number,"invoice_details"?: Json,"legal_last_updated"?: string,"legal_text"?: string | null,"live_link_join_window_after_minutes"?: number,"live_link_join_window_before_minutes"?: number,"logo_url"?: string | null,"maintenance_mode"?: boolean,"medical_disclaimer_html"?: string,"privacy_html"?: string,"razorpay_mode"?: string,"refund_policy_html"?: string,"social_links"?: Json,"support_email"?: string,"support_helplines"?: Json,"support_whatsapp"?: string | null,"terms_html"?: string,"updated_at"?: string
                   }
                   Relationships: [
                     
@@ -1118,7 +1118,75 @@ isOneToOne: false
                            },
 "show_trgm":
 { Args: { "": string }; Returns: (string)[]
-                           }
+                           },
+            "admin_list_students": {
+              Args: {
+                "p_filter_goal_pillar"?: string | null,
+                "p_filter_is_blocked"?: boolean | null,
+                "p_filter_joined_from"?: string | null,
+                "p_filter_joined_to"?: string | null,
+                "p_filter_no_enrollment"?: boolean | null,
+                "p_filter_program_id"?: string | null,
+                "p_limit"?: number,
+                "p_offset"?: number,
+                "p_search"?: string | null,
+                "p_sort_by"?: string,
+                "p_sort_order"?: string
+              },
+              Returns: Json
+            },
+            "admin_get_student": {
+              Args: { "p_user_id": string },
+              Returns: Json
+            },
+            "admin_set_blocked": {
+              Args: { "p_blocked": boolean, "p_reason"?: string | null, "p_user_id": string },
+              Returns: Json
+            },
+            "admin_list_orders": {
+              Args: { "p_filters"?: Json, "p_limit"?: number, "p_offset"?: number, "p_search"?: string | null },
+              Returns: Json
+            },
+            "admin_revenue_stats": {
+              Args: { "p_range"?: string },
+              Returns: Json
+            },
+            "admin_attendance_report": {
+              Args: { "p_program_id": string, "p_session_id"?: string | null },
+              Returns: Json
+            },
+            "admin_dashboard_stats": {
+              Args: { "p_range"?: string },
+              Returns: Json
+            },
+            "handle_deletion_request": {
+              Args: { "p_note"?: string | null, "p_request_id": string, "p_status": string },
+              Returns: Json
+            },
+            "validate_coupon": {
+              Args: { "p_code": string, "p_program_id": string, "p_user_id"?: string },
+              Returns: Json
+            },
+            "admin_list_reviews": {
+              Args: { "p_limit"?: number, "p_offset"?: number, "p_program_id"?: string | null, "p_status"?: string | null },
+              Returns: Json
+            },
+            "admin_moderate_review": {
+              Args: { "p_review_id": string, "p_status": string },
+              Returns: Json
+            },
+            "admin_delete_review": {
+              Args: { "p_review_id": string },
+              Returns: Json
+            },
+            "admin_update_site_settings": {
+              Args: { "p_settings": Json },
+              Returns: Json
+            },
+            "get_public_site_settings": {
+              Args: Record<PropertyKey, never>,
+              Returns: Json
+            }
           }
           Enums: {
             "announcement_audience": "all"|"program"|"user","announcement_kind": "info"|"success"|"warning"|"urgent","discount_type": "percent"|"flat","enrollment_source": "paid"|"manual"|"coupon_free","enrollment_status": "active"|"refunded"|"revoked","live_platform": "zoom"|"meet"|"youtube"|"other","order_status": "created"|"paid"|"failed"|"refunded","program_category": "emotional"|"mental"|"academic"|"personal","program_status": "draft"|"published"|"live"|"completed"|"archived","program_type": "challenge"|"course","session_status": "scheduled"|"live"|"ended","user_role": "admin"|"staff"|"student","video_status": "uploading"|"queued"|"transcoding"|"ready"|"failed"

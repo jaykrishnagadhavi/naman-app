@@ -590,5 +590,188 @@ export const ProgramFormSchema = z
 
 export type ProgramFormValues = z.infer<typeof ProgramFormSchema>;
 
+// ============================================================================
+// Step 9: Administrative Business Schemas
+// ============================================================================
+
+// 1. Coupon Form Schema
+export const CouponFormSchema = z
+  .object({
+    code: z
+      .string({ required_error: 'Coupon code is required.' })
+      .trim()
+      .min(3, 'Code must be at least 3 characters.')
+      .max(30, 'Code cannot exceed 30 characters.')
+      .regex(/^[A-Za-z0-9_-]+$/, 'Code can only contain letters, numbers, hyphens, and underscores.')
+      .transform((val) => val.toUpperCase()),
+    discount_type: z.enum(['percent', 'flat'], {
+      required_error: 'Please select a discount type.',
+    }),
+    value: z
+      .number({ invalid_type_error: 'Please enter a valid numeric value.' })
+      .positive('Discount value must be greater than zero.'),
+    max_uses: z
+      .number({ invalid_type_error: 'Max uses must be a number.' })
+      .int('Must be a whole number.')
+      .positive('Max uses must be positive.')
+      .nullable()
+      .optional(),
+    per_user_limit: z
+      .number({ invalid_type_error: 'Per user limit must be a number.' })
+      .int('Must be a whole number.')
+      .positive('Per user limit must be at least 1.')
+      .default(1),
+    valid_from: z.string({ required_error: 'Start date is required.' }),
+    valid_until: z.string().nullable().optional(),
+    applicable_program_ids: z.array(z.string().uuid()).default([]),
+    is_active: z.boolean().default(true),
+  })
+  .refine(
+    (data) => {
+      if (data.discount_type === 'percent') {
+        return data.value >= 1 && data.value <= 100;
+      }
+      return true;
+    },
+    {
+      message: 'Percentage discount must be between 1% and 100%.',
+      path: ['value'],
+    }
+  )
+  .refine(
+    (data) => {
+      if (data.valid_from && data.valid_until) {
+        return new Date(data.valid_until).getTime() >= new Date(data.valid_from).getTime();
+      }
+      return true;
+    },
+    {
+      message: 'Expiry date must be on or after the start date.',
+      path: ['valid_until'],
+    }
+  );
+
+export type CouponFormValues = z.infer<typeof CouponFormSchema>;
+
+// 2. Block/Unblock Student Schema
+export const BlockStudentSchema = z
+  .object({
+    user_id: z.string().uuid('Valid student ID required.'),
+    is_blocked: z.boolean(),
+    reason: z.string().trim().optional(),
+  })
+  .refine(
+    (data) => {
+      if (data.is_blocked) {
+        return !!data.reason && data.reason.length >= 3;
+      }
+      return true;
+    },
+    {
+      message: 'A clear reason (at least 3 characters) is required when suspending an account.',
+      path: ['reason'],
+    }
+  );
+
+export type BlockStudentInput = z.infer<typeof BlockStudentSchema>;
+
+// 3. Deletion Request Resolution Schema
+export const DeletionRequestResolutionSchema = z.object({
+  request_id: z.string().uuid(),
+  status: z.enum(['processing', 'completed', 'rejected']),
+  admin_note: z.string().trim().optional(),
+});
+
+export type DeletionRequestResolutionInput = z.infer<typeof DeletionRequestResolutionSchema>;
+
+// 4. Helpline Entry Schema
+export const HelplineEntrySchema = z.object({
+  name: z.string().trim().min(1, 'Helpline name is required.'),
+  number: z.string().trim().min(1, 'Phone or dial code is required.'),
+  hours: z.string().trim().default('24/7'),
+  region: z.string().trim().default('India (National)'),
+  verified: z.boolean().default(false),
+});
+
+export type HelplineEntry = z.infer<typeof HelplineEntrySchema>;
+
+// 5. Site Settings Form Schema
+export const SiteSettingsFormSchema = z.object({
+  // Brand Tab
+  brand_name: z.string().trim().min(1, 'Brand name cannot be blank.').default('ABrainoConscious'),
+  logo_url: z.string().nullable().optional(),
+  favicon_url: z.string().nullable().optional(),
+  support_email: z.string().trim().email('Please enter a valid support email address.'),
+  support_whatsapp: z.string().trim().nullable().optional(),
+  social_links: z
+    .object({
+      youtube: z.string().trim().default(''),
+      instagram: z.string().trim().default(''),
+      twitter: z.string().trim().default(''),
+      linkedin: z.string().trim().default(''),
+    })
+    .default({ youtube: '', instagram: '', twitter: '', linkedin: '' }),
+  channel_subscriber_count: z.number().int().nonnegative().default(0),
+
+  // Business Tab
+  gst_enabled: z.boolean().default(false),
+  gst_number: z.string().trim().nullable().optional(),
+  gst_rate_percent: z.number().min(0).max(100).default(18),
+  invoice_details: z
+    .object({
+      company_name: z.string().trim().default('ABrainoConscious'),
+      address: z.string().trim().default(''),
+      city: z.string().trim().default(''),
+      state: z.string().trim().default(''),
+      pincode: z.string().trim().default(''),
+      pan: z.string().trim().default(''),
+    })
+    .default({ company_name: 'ABrainoConscious', address: '', city: '', state: '', pincode: '', pan: '' }),
+  currency_display: z.string().default('INR'),
+
+  // Legal Pages Tab
+  terms_html: z.string().default(''),
+  privacy_html: z.string().default(''),
+  refund_policy_html: z.string().default(''),
+  medical_disclaimer_html: z.string().default(''),
+
+  // Support Helplines Tab
+  support_helplines: z.array(HelplineEntrySchema).default([]),
+
+  // Sessions Tab
+  allowed_live_link_hosts: z.array(z.string().trim()).default(['zoom.us', 'meet.google.com', 'youtube.com', 'youtu.be']),
+  live_link_join_window_before_minutes: z.number().int().min(0).max(180).default(15),
+  live_link_join_window_after_minutes: z.number().int().min(15).max(720).default(120),
+  default_daily_session_time: z.string().default('19:00'),
+
+  // Site / Security Tab
+  maintenance_mode: z.boolean().default(false),
+  idle_timeout_minutes: z.number().int().min(5).max(120).default(30),
+});
+
+export type SiteSettingsFormValues = z.infer<typeof SiteSettingsFormSchema>;
+
+// 6. Team Member Action Schemas
+export const AddTeamMemberSchema = z.object({
+  email: z.string().trim().email('Please enter a valid email address.').transform((e) => e.toLowerCase()),
+  role: z.enum(['admin', 'staff'], { required_error: 'Role is required.' }),
+});
+
+export type AddTeamMemberInput = z.infer<typeof AddTeamMemberSchema>;
+
+export const ChangeTeamRoleSchema = z.object({
+  user_id: z.string().uuid(),
+  new_role: z.enum(['admin', 'staff', 'student']),
+});
+
+export type ChangeTeamRoleInput = z.infer<typeof ChangeTeamRoleSchema>;
+
+export const RemoveTeamMemberSchema = z.object({
+  user_id: z.string().uuid(),
+});
+
+export type RemoveTeamMemberInput = z.infer<typeof RemoveTeamMemberSchema>;
+
+
 
 

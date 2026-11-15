@@ -510,5 +510,177 @@ export function isSessionStartingSoonWithoutLink(
   return sessionTime >= now && sessionTime <= now + windowMs;
 }
 
+/**
+ * Escapes a cell value to prevent CSV Formula Injection (CWE-1236).
+ * Any cell value starting with '=', '+', '-', '@', or tab ('\t') is prefixed with a single quote (').
+ * Embedded quotes and commas are properly escaped using RFC 4180 rules.
+ */
+export function escapeCsvCell(val: unknown): string {
+  if (val === null || val === undefined) return '';
+  let str = String(val);
+
+  // Strip or neutralize formula injection characters
+  if (/^[=+\-@\t\r]/.test(str)) {
+    str = `'${str}`;
+  }
+
+  // Quote the string if it contains commas, double quotes, or newlines
+  if (/[",\n\r]/.test(str)) {
+    str = `"${str.replace(/"/g, '""')}"`;
+  }
+
+  return str;
+}
+
+/**
+ * Generates an RFC 4180 compliant CSV string from headers and rows with formula injection protection.
+ */
+export function generateCsv(
+  headers: string[],
+  rows: (string | number | boolean | null | undefined)[][]
+): string {
+  const headerLine = headers.map(escapeCsvCell).join(',');
+  const rowLines = rows.map((row) => row.map(escapeCsvCell).join(','));
+  return [headerLine, ...rowLines].join('\r\n');
+}
+
+/**
+ * Downloads a generated CSV in the browser environment.
+ */
+export function downloadCsv(filename: string, csvContent: string): void {
+  if (typeof window === 'undefined' || typeof document === 'undefined') return;
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.setAttribute('href', url);
+  link.setAttribute('download', filename.endsWith('.csv') ? filename : `${filename}.csv`);
+  link.style.visibility = 'hidden';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
+/**
+ * Calculates coupon discount and final price in integer paise.
+ */
+export function calculateCouponDiscount(
+  coupon: {
+    discount_type: 'percent' | 'flat';
+    value: number; // percentage (1-100) or flat in paise
+  },
+  programPricePaise: number
+): { discountPaise: number; finalPricePaise: number } {
+  if (!programPricePaise || programPricePaise <= 0) {
+    return { discountPaise: 0, finalPricePaise: 0 };
+  }
+
+  let discountPaise = 0;
+  if (coupon.discount_type === 'percent') {
+    const pct = Math.max(0, Math.min(100, coupon.value));
+    discountPaise = Math.round((programPricePaise * pct) / 100);
+  } else if (coupon.discount_type === 'flat') {
+    discountPaise = Math.max(0, Math.round(coupon.value));
+  }
+
+  // Cap discount at original price
+  discountPaise = Math.min(discountPaise, programPricePaise);
+  const finalPricePaise = Math.max(0, programPricePaise - discountPaise);
+
+  return { discountPaise, finalPricePaise };
+}
+
+/**
+ * Role Permission Matrix Definitions
+ */
+export interface RolePermission {
+  feature: string;
+  category: 'Programs' | 'Operations' | 'Finance' | 'Platform';
+  admin: boolean;
+  staff: boolean;
+  description: string;
+}
+
+export const ROLE_PERMISSIONS: RolePermission[] = [
+  {
+    feature: 'Programs & Courses',
+    category: 'Programs',
+    admin: true,
+    staff: true,
+    description: 'Create, edit, duplicate, and publish challenge and course programs.',
+  },
+  {
+    feature: 'Live Sessions & Recordings',
+    category: 'Programs',
+    admin: true,
+    staff: true,
+    description: 'Publish live meeting links, schedule sessions, and add recording URLs.',
+  },
+  {
+    feature: 'Announcements & Broadcasts',
+    category: 'Operations',
+    admin: true,
+    staff: true,
+    description: 'Draft and send student broadcasts, banner notifications, and direct alerts.',
+  },
+  {
+    feature: 'Students & Attendance',
+    category: 'Operations',
+    admin: true,
+    staff: true,
+    description: 'View student directory, enrollment logs, attendance rates, and progress.',
+  },
+  {
+    feature: 'Review Moderation',
+    category: 'Operations',
+    admin: true,
+    staff: true,
+    description: 'Approve, hide, or moderate student testimonials and feedback.',
+  },
+  {
+    feature: 'Student Account Moderation',
+    category: 'Operations',
+    admin: true,
+    staff: false,
+    description: 'Suspend or block malicious student accounts from platform access.',
+  },
+  {
+    feature: 'Discount Coupons Engine',
+    category: 'Finance',
+    admin: true,
+    staff: false,
+    description: 'Create and configure promotional coupon codes, percentage caps, and limits.',
+  },
+  {
+    feature: 'Orders, Revenue & Invoices',
+    category: 'Finance',
+    admin: true,
+    staff: false,
+    description: 'Access financial transactions, order ledgers, and revenue telemetry.',
+  },
+  {
+    feature: 'Team & RBAC Management',
+    category: 'Platform',
+    admin: true,
+    staff: false,
+    description: 'Invite new staff members, modify team permissions, and assign roles.',
+  },
+  {
+    feature: 'Platform & Legal Settings',
+    category: 'Platform',
+    admin: true,
+    staff: false,
+    description: 'Configure brand identity, legal policy texts, GST, helplines, and maintenance mode.',
+  },
+  {
+    feature: 'Security & Audit Log',
+    category: 'Platform',
+    admin: true,
+    staff: false,
+    description: 'Review sensitive action audit history and platform security telemetry.',
+  },
+];
+
+
 
 

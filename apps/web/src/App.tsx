@@ -19,13 +19,19 @@ import {
   CheckoutPage,
   ProgramLearnPage,
   CourseWatchPage,
-  CrisisSupportPage,
   MyProgramsPage,
   InboxPage,
   CommunityPage,
   BadgesPage,
   OrdersPage
 } from './pages/WebPages';
+import {
+  TermsPage,
+  PrivacyPage,
+  RefundPolicyPage,
+  SupportPage,
+} from './pages/PublicLegalPages';
+import { Wrench, ShieldAlert } from 'lucide-react';
 import { SignupPage } from './pages/auth/SignupPage';
 import { LoginPage } from './pages/auth/LoginPage';
 import { ForgotPasswordPage } from './pages/auth/ForgotPasswordPage';
@@ -104,6 +110,88 @@ const AppContent: React.FC = () => {
     enabled: Boolean(user),
     staleTime: 1000 * 30,
   });
+
+  // Public Site Settings (Maintenance mode and brand details)
+  const { data: publicSettings } = useQuery({
+    queryKey: ['web-site-settings'],
+    queryFn: async () => {
+      const { data } = await supabase
+        .from('site_settings')
+        .select('maintenance_mode, brand_name, support_email')
+        .maybeSingle();
+      return data;
+    },
+    staleTime: 1000 * 60,
+  });
+
+  // Maintenance Mode Guard (Admin and staff retain access)
+  const isPrivileged = profile?.role === 'admin' || profile?.role === 'staff';
+  const isAuthPath = location.pathname.startsWith('/login') || location.pathname.startsWith('/auth');
+
+  if (publicSettings?.maintenance_mode && !isPrivileged && !isAuthPath) {
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center bg-[#040C0E] p-6 text-center text-white">
+        <div className="max-w-md w-full rounded-2xl border border-amber-500/30 bg-[#081619] p-8 shadow-2xl space-y-4">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-500/10 text-amber-400 mx-auto">
+            <Wrench className="h-7 w-7" />
+          </div>
+          <h1 className="font-serif text-2xl font-bold text-white">Under Scheduled Maintenance</h1>
+          <p className="text-xs text-[#8D9FA4] leading-relaxed">
+            {publicSettings?.brand_name || 'ABrainoConscious'} is currently undergoing routine maintenance to upgrade our live session and streaming infrastructure. We will be back online shortly.
+          </p>
+          <div className="pt-2 text-[11px] text-[#556B71]">
+            Need assistance? Email{' '}
+            <a
+              href={`mailto:${publicSettings?.support_email || 'support@abrainoconscious.com'}`}
+              className="text-amber-400 underline"
+            >
+              {publicSettings?.support_email || 'support@abrainoconscious.com'}
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Blocked Student Paused Screen
+  if (user && profile?.is_blocked) {
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center bg-[#040C0E] p-6 text-center text-white">
+        <div className="max-w-md w-full rounded-2xl border border-rose-500/30 bg-[#081619] p-8 shadow-2xl space-y-4">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-rose-500/10 text-rose-400 mx-auto">
+            <ShieldAlert className="h-7 w-7" />
+          </div>
+          <h1 className="font-serif text-2xl font-bold text-white">Account Temporarily Suspended</h1>
+          <p className="text-xs text-[#8D9FA4] leading-relaxed">
+            Your student account access has been paused by an administrator.
+            {profile?.blocked_reason && (
+              <span className="block mt-2 font-mono text-[11px] text-rose-300">
+                Reason: "{profile.blocked_reason}"
+              </span>
+            )}
+          </p>
+          <p className="text-xs text-[#8D9FA4]">
+            If you believe this is in error or wish to appeal, please contact support.
+          </p>
+          <div className="pt-2 flex items-center justify-center gap-3">
+            <a
+              href={`mailto:${publicSettings?.support_email || 'support@abrainoconscious.com'}`}
+              className="rounded-xl bg-amber-500 px-4 py-2 text-xs font-bold text-black hover:bg-amber-400"
+            >
+              Contact Support
+            </a>
+            <button
+              type="button"
+              onClick={() => signOut()}
+              className="rounded-xl border border-[#1A373E] px-4 py-2 text-xs text-[#8D9FA4] hover:text-white"
+            >
+              Sign Out
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (location.pathname === '/design-system') {
     return <DesignSystemPage />;
@@ -190,7 +278,10 @@ const AppContent: React.FC = () => {
             </RequireAuth>
           }
         />
-        <Route path="/support" element={<CrisisSupportPage />} />
+        <Route path="/support" element={<SupportPage />} />
+        <Route path="/terms" element={<TermsPage />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/refund-policy" element={<RefundPolicyPage />} />
 
         {/* Authenticated Routes */}
         <Route
